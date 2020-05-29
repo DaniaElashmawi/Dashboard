@@ -1,0 +1,94 @@
+*:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+#profile,
+#profileEdit {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 0 !important;
+}
+
+#profile .profile-description-title,
+#profile .profile-subscription-title,
+#profileEdit .profile-edit-title,
+#profileEdit .profilesub-edit-title {
+  background-color: #F60000;
+  padding: 15px;
+  color: white;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  margin-bottom: 30px;
+}
+
+#profile .delete-profile,
+#profileEdit .cancel-profile {
+  background-color: #000;
+  color: white;
+}
+
+
+#profile .edit-profile,
+#profileEdit .save-profile {
+  background-color: #F60000;
+  color: white;
+}
+
+#profile .button-border,
+#profileEdit .button-border {
+  padding: 5px;
+  border: 2px solid transparent;
+  transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+
+}
+
+#profile .button-border:nth-child(2):hover,
+#profileEdit .button-border:nth-child(2):hover {
+  transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  border: 2px solid black;
+}
+
+#profile .button-border:nth-child(1):hover,
+#profileEdit .save-profile:hover:enabled .button-border:nth-child(2) {
+  transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  border: 2px solid #F60000;
+}
+
+
+
+.profile-not-found {
+  display: none;
+
+}
+
+#profileEdit h6 {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+#profileEdit textarea {
+  resize: none;
+  border-radius: 5px;
+  border: 1px solid #DDD;
+  font-size: 15px;
+
+}
+
+label {
+  color: #F60000;
+  font-weight: 700;
+}
+
+input {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #DDD;
+  width: 80%;
+  font-size: 15px;
+  margin: 0 auto;
+  max-height: 2em;
+}

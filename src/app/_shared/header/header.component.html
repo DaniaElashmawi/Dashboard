@@ -1,0 +1,40 @@
+<mat-toolbar id="toolbar" [class.menu-prim]="bgColor" [class.menu-sec]="!bgColor">
+
+  <mat-toolbar-row>
+
+    <span class=" menu-logo ">
+      <img src="../../../assets/fahmawy-brand.png">
+    </span>
+
+
+    <div class="d-flex header-content justify-content-between w-100">
+      <div class="pull-left">
+        <h5 [style.color]="bgColor? 'white' : '#f60000' ">FAHMAWY</h5>
+        <button mat-menu-item class="btn" (click)="togglevalue()">
+          <mat-icon [style.color]="bgColor? 'white' : '#f60000' ">menu</mat-icon>
+        </button>
+      </div>
+      <div class="pull-right">
+
+
+        <button class=" btn" mat-menu-item (click)="onLogOut()" [routerLink]="['/login']">
+          <mat-icon [style.color]="bgColor? 'white' : '#f60000' ">exit_to_app</mat-icon>
+        </button>
+
+
+
+        <button class=" btn" mat-menu-item>
+          <mat-icon [style.color]="bgColor? 'white' : '#f60000' ">notification_important</mat-icon>
+        </button>
+
+
+      </div>
+
+
+    </div>
+
+
+
+  </mat-toolbar-row>
+
+</mat-toolbar>

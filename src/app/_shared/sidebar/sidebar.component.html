@@ -1,0 +1,42 @@
+<mat-nav-list>
+
+
+  <mat-list-item routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/dashboard']">
+    <mat-icon class="mr-1  prim-color">dashboard</mat-icon>
+    <ng-template [ngIf]="togglevar">
+      <span class="prim-color">Dashboard</span>
+    </ng-template>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+  <mat-list-item routerLinkActive="active" [routerLink]="['/dashboard/profile']">
+    <mat-icon class="mr-1  prim-color">account_box</mat-icon>
+    <ng-template [ngIf]="togglevar"><span class="prim-color">profile</span></ng-template>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+
+  <mat-list-item routerLinkActive="active" [routerLink]="['/dashboard/categories']">
+    <mat-icon class="mr-1  prim-color">list</mat-icon>
+    <ng-template [ngIf]="togglevar"><span class="prim-color">categories</span></ng-template>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+
+  <mat-list-item routerLinkActive="active" [routerLink]="['/dashboard/projects']">
+    <mat-icon class="mr-1  prim-color">business_center
+    </mat-icon>
+    <ng-template [ngIf]="togglevar"><span class="prim-color">projects</span> </ng-template>
+  </mat-list-item>
+
+  <mat-divider></mat-divider>
+
+  <mat-list-item routerLinkActive="active" [routerLink]="['/dashboard/team']">
+    <mat-icon class="mr-1  prim-color">group</mat-icon>
+    <ng-template [ngIf]="togglevar"><span class="prim-color">team</span></ng-template>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+
+  <mat-divider></mat-divider>
+
+
+
+
+</mat-nav-list>

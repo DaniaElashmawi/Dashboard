@@ -1,0 +1,57 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+* {
+  transition: all .5s;
+}
+
+app-sidebar {
+  overflow-x: hidden;
+}
+
+#sidenav {
+  background-image: linear-gradient(180deg, rgba(246, 0, 0, 0.9) 0%, rgba(255, 255, 255, 0.4) 93%),
+    url('../../../assets/side-bar-bg.jpg');
+  background-position: center;
+  background-size: cover;
+}
+
+#sidenav.menu-close {
+  width: 50px;
+}
+
+#sidenav.menu-open {
+  width: 140px;
+  margin-top: 15px;
+  border-top-right-radius: 24px;
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav-content {
+  padding: 30px;
+}
+
+/* mat-sidenav:not(.mat-drawer-opened) {
+  transform: translate3d(0, 0, 0) !important;
+  visibility: visible !important;
+  width: 60px !important;
+  overflow: hidden;
+}
+
+mat-sidenav:not(.mat-drawer-opened) div.leftNav div.navProfile img {
+  width: 40px;
+  margin: 16px 0 0px 0;
+}
+
+mat-sidenav:not(.mat-drawer-opened) .navTitle,
+mat-sidenav:not(.mat-drawer-opened) .profileTitle {
+  display: none;
+}
+
+*/

@@ -1,0 +1,19 @@
+<app-header (toggleSidebar)="togglingSidebar($event)">
+
+</app-header>
+
+<mat-sidenav-container>
+
+  <mat-sidenav id="sidenav" mode="side" opened [class.menu-open]="isMenuOpen" [class.menu-close]="!isMenuOpen">
+    <app-sidebar [togglevar]="isMenuOpen"></app-sidebar>
+  </mat-sidenav>
+
+
+  <mat-sidenav-content [ngStyle]="{'margin-left':isMenuOpen ? '165px' :  '55px' }">
+    <router-outlet></router-outlet>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+
+<app-footer></app-footer>

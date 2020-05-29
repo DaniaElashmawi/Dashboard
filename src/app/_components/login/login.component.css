@@ -1,0 +1,51 @@
+section.login-box {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  background-color: #EFEFEF;
+  min-height: 100%;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="email"]:focus,
+input[type="password"]:focus {
+  padding: 6px;
+  border-radius: 11px;
+  margin: 10px;
+  outline: none;
+  border: 1px solid white;
+  background-color: white !important;
+  color: #646464;
+
+}
+
+input::placeholder {
+  color: #D6D6D6;
+}
+
+.btn-login {
+  background-color: #F60000;
+  color: white;
+}
+
+button:focus,
+button {
+  outline: none;
+  box-shadow: none;
+}
+
+.card {
+  border: none;
+  width: 45%;
+  background-color: #F7F7F7;
+  border-radius: 14px;
+  -webkit-box-shadow: 0px 0px 14px 3px rgba(214, 214, 214, 0.95);
+  -moz-box-shadow: 0px 0px 14px 3px rgba(214, 214, 214, 0.95);
+  box-shadow: 0px 0px 14px 3px rgba(214, 214, 214, 0.95);
+}
+
+.error {
+  color: red;
+}
