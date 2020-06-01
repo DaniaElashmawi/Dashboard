@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { CompanyinfoService } from '../../_services/companyinfo.service';
 
 @Component({
   selector: 'app-profile',
@@ -7,8 +8,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  constructor(private _CompanyinfoService: CompanyinfoService) { }
 
-  constructor() { }
+  currentCompanyInfo: any;
   profileHiddin: boolean = false;
 
   profileForm = new FormGroup({
@@ -19,12 +21,16 @@ export class ProfileComponent implements OnInit {
     companyEmail: new FormControl('', Validators.required),
     packageSubs: new FormControl('', Validators.required),
     companyAddress: new FormControl('', Validators.required),
-
-
   });
 
+  // loadCompanyInfo() {
+
+
+  // }
+
+
   profileEdit() {
-    console.log("hello from edit");
+    // console.log("hello from edit");
     this.profileHiddin = true;
   }
 
@@ -34,7 +40,14 @@ export class ProfileComponent implements OnInit {
   onCancel() {
     // this.profileform.reset();
   }
+
+
   ngOnInit() {
+    this._CompanyinfoService.getCompanyInfo().subscribe(data => {
+      this.currentCompanyInfo = data
+    });
+
+    console.log(this.currentCompanyInfo);
   }
 
 }

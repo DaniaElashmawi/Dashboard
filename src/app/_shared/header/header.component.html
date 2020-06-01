@@ -8,24 +8,35 @@
 
 
     <div class="d-flex header-content justify-content-between w-100">
-      <div class="pull-left">
+
+      <div class="left-header d-flex align-items-center">
         <h5 [style.color]="bgColor? 'white' : '#f60000' ">FAHMAWY</h5>
-        <button mat-menu-item class="btn" (click)="togglevalue()">
-          <mat-icon [style.color]="bgColor? 'white' : '#f60000' ">menu</mat-icon>
+        <button mat-menu-item (click)="togglevalue()">
+          <mat-icon [ngStyle]="{'margin-right':'0'}" [style.color]="bgColor? 'white' : '#f60000' ">menu</mat-icon>
         </button>
       </div>
-      <div class="pull-right">
 
+      <div class="right-header d-flex align-items-center">
 
-        <button class=" btn" mat-menu-item (click)="onLogOut()" [routerLink]="['/login']">
-          <mat-icon [style.color]="bgColor? 'white' : '#f60000' ">exit_to_app</mat-icon>
+        <button [ngStyle]="{'padding':'0'}" mat-menu-item [matMenuTriggerFor]="userMenu">
+
+          <mat-icon [ngStyle]="{'margin-right':'0'}" [style.color]="bgColor? 'white' : '#f60000' ">person_outline
+          </mat-icon>
+          <span [ngStyle]="{'font-size':'14px'}" [style.color]="bgColor? 'white' : '#f60000' ">
+            {{currenUserData.name}}</span>
         </button>
 
+        <mat-menu #userMenu="matMenu">
 
+          <button mat-menu-item>
+            <mat-icon [ngStyle]="{'color':'#F60000'}">notification_important</mat-icon>Notifications
+          </button>
+          <button mat-menu-item (click)="onLogOut()" [routerLink]="['/login']">
+            <mat-icon [ngStyle]="{'color':'#F60000'}">exit_to_app</mat-icon>Sing Out
+          </button>
 
-        <button class=" btn" mat-menu-item>
-          <mat-icon [style.color]="bgColor? 'white' : '#f60000' ">notification_important</mat-icon>
-        </button>
+        </mat-menu>
+
 
 
       </div>

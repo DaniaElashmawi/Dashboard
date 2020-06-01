@@ -12,11 +12,8 @@ export class ProjectsService {
 
 
   getAllProjects(): Observable<any> {
-    return this._HttpClient.get(`${environment.apiUrl}/api/unknown/`);
+    return this._HttpClient.get(`${environment.apiUrl}/api/projects/2`);
   }
 
-  getSingleProject(id): Observable<any> {
-    return this._HttpClient.get(`${environment.apiUrl}/api/unknown/${id}`);
-  }
 
 }

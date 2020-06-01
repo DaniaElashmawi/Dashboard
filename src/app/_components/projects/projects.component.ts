@@ -10,14 +10,14 @@ export class ProjectsComponent implements OnInit {
   projects: any = [];
   isOpen: boolean = false;
   index;
-  constructor(public _projects: ProjectsService) { }
+  constructor(public _projectsService: ProjectsService) { }
 
 
 
   loadAllProjects() {
-    return this._projects.getAllProjects().subscribe((res: {}) => {
-      this.projects = res['data'];
-      console.log(this.projects);
+    return this._projectsService.getAllProjects().subscribe((res) => {
+      this.projects = res;
+      console.log(res);
     });
   }
   popup(i) {

@@ -6,11 +6,13 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class CompanyinfoService {
 
-  constructor(private _HttpClient: HttpClient) { }
-  getUser(id): Observable<any> {
-    return this._HttpClient.get(`${environment.apiUrl}/api/users/${id}`);
+  constructor(private _httpClient: HttpClient) { }
+
+  getCompanyInfo(): Observable<any> {
+    return this._httpClient.get(`${environment.apiUrl}/api/company_infs/1/1`);
 
   }
+
 }

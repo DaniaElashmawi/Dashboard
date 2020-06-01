@@ -1,1 +1,29 @@
-<p>categories works!</p>
+<section id="categories" class="container">
+
+  <div class="row">
+    <div class="col-12">
+      <h5 class="categories-title">
+        Our categories
+      </h5>
+    </div>
+  </div>
+
+  <div class="categories row px-5">
+
+    <div class="col-md-4 my-4 p-3 " *ngFor="let category of categoriesNames ; index as index ">
+      <div class="category-box border">
+        <h6>{{category}}</h6>
+        <div *ngIf="category == categories[index]?.category">
+          {{categories[index]?.title}}
+          {{categories[index]?.category}}
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+
+</section>
