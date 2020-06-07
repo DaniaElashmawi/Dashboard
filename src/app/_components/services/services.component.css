@@ -3,9 +3,7 @@
   box-shadow: none;
 }
 
-
-
-#projects {
+#services {
   background-color: #fff;
   border-radius: 8px;
   padding: 0 !important;
@@ -13,7 +11,7 @@
 }
 
 
-#projects .projects-title {
+#services .services-title {
   background-color: #F60000;
   padding: 15px;
   color: white;
@@ -22,29 +20,29 @@
   margin-bottom: 50px;
 }
 
-#projects .projects {
+#services .services {
   margin-top: 50px;
 }
 
-#projects .project-box {
+#services .service-box {
   min-height: 160px;
 }
 
-#projects .project-box mat-card {
+#services .service-box mat-card {
   height: 100%;
 }
 
-#projects .show-btn {
+#services .show-btn {
   bottom: 10px;
   right: 10px;
 }
 
-#projects .show-btn button {
+#services .show-btn button {
   background-color: #F60000;
   color: white;
 }
 
-#projects .add-btn {
+#services .add-btn {
   position: absolute;
   top: 90px;
   right: 30px;
@@ -52,17 +50,17 @@
   cursor: pointer;
 }
 
-#projects .project-setting {
+#services .service-setting {
   right: 6px;
   bottom: 6px;
 
 }
 
-#projects .single-project {
+#services .single-service {
   border: 1px #b6b5b5 solid;
 }
 
-#projects .project-setting mat-icon {
+#services .service-setting mat-icon {
   margin: 0 10px;
   cursor: pointer;
 }
@@ -83,7 +81,7 @@
   font-weight: 800;
 }
 
-.projects-list {}
+.service-list {}
 
 .hide {
   display: none;

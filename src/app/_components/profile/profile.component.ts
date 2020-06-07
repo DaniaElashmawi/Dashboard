@@ -10,7 +10,7 @@ import { CompanyinfoService } from '../../_services/companyinfo.service';
 export class ProfileComponent implements OnInit {
   constructor(private _CompanyinfoService: CompanyinfoService) { }
 
-  currentCompanyInfo: any;
+  currentCompanyInfo;
   profileHiddin: boolean = false;
 
   profileForm = new FormGroup({
@@ -23,10 +23,14 @@ export class ProfileComponent implements OnInit {
     companyAddress: new FormControl('', Validators.required),
   });
 
-  // loadCompanyInfo() {
 
+  loadCompanyInfo() {
+    return this._CompanyinfoService.getCompanyInfo().subscribe(info => {
+      this.currentCompanyInfo = info[0];
+      console.log(this.currentCompanyInfo);
+    });
 
-  // }
+  }
 
 
   profileEdit() {
@@ -43,11 +47,7 @@ export class ProfileComponent implements OnInit {
 
 
   ngOnInit() {
-    this._CompanyinfoService.getCompanyInfo().subscribe(data => {
-      this.currentCompanyInfo = data
-    });
-
-    console.log(this.currentCompanyInfo);
+    this.loadCompanyInfo();
   }
 
 }

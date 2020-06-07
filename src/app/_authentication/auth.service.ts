@@ -29,6 +29,7 @@ export class AuthService {
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
         this._router.navigate(['/dashboard']);
+        console.log('current user token:', this.currentUserValue['data']['api_token'], 'current user id: ', this.currentUserValue['data']['id']);
         return user;
       }));
 

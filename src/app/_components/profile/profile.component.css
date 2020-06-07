@@ -10,6 +10,10 @@
   padding: 0 !important;
 }
 
+.profile-content p {
+  margin: 0;
+}
+
 #profile .profile-description-title,
 #profile .profile-subscription-title,
 #profileEdit .profile-edit-title,
@@ -60,7 +64,7 @@
 
 
 
-.profile-not-found {
+.profile-hidden {
   display: none;
 
 }

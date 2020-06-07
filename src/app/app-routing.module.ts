@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CategoriesComponent } from './_components/categories/categories.component';
 import { DashboardComponent } from './_components/dashboard/dashboard.component';
 import { ProfileComponent } from './_components/profile/profile.component';
 import { ProjectsComponent } from './_components/projects/projects.component';
 import { LoginComponent } from './_components/login/login.component';
+import { ServicesComponent } from './_components/services/services.component';
 import { TeamComponent } from './_components/team/team.component';
 import { GuardGuard } from './_authentication/guard.guard';
 import { LayoutComponent } from './_layouts/layout/layout.component';
+
 
 const routes: Routes = [{
   path: 'login',
@@ -22,7 +23,7 @@ const routes: Routes = [{
       component: DashboardComponent,
       children: [
         {
-          path: 'categories', component: CategoriesComponent
+          path: 'services', component: ServicesComponent
         },
         {
           path: 'projects', component: ProjectsComponent

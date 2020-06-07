@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<section id="services" class="container my-3">
+
+  <div class="mb-5">
+    <div class="row">
+
+      <div class="col-12">
+        <h5 class="services-title">
+          Your Company Services!
+        </h5>
+      </div>
+    </div>
+
+    <div class="services row px-5 ">
+
+      <div class="my-4 col-md-4 position-relative service-box p-3" *ngFor="let service of services ; index as index ">
+
+        <mat-card class="project-content position-relative">
+          <strong> {{service.title}}
+          </strong>
+
+
+
+          <div class="text-right position-absolute show-btn">
+            <button (click)="loadservices(index)" class="btn ">Show all Services</button>
+          </div>
+
+        </mat-card>
+
+
+      </div>
+
+
+    </div>
+
+    <div class="add-btn secondary-color d-flex align-items-center">
+      <mat-icon>add</mat-icon>Add New Service!
+    </div>
+
+
+    <div [ngClass]=" serv? 'show' : 'hide' " class="row p-5 ">
+
+
+      <div class="single-service col-12 p-3 my-3 " *ngFor="let proj of servicesDetails ; index as i">
+        <h5><span>{{i + 1}}. </span>{{proj.title}}</h5>
+        <!-- <p> {{proj.description}} </p> -->
+
+        <div class="position-absolute service-setting">
+
+          <mat-icon (click)="openDialog(i)">visibility</mat-icon>
+          <mat-icon (click)="openEditDialog(i)" class="edit-color">edit</mat-icon>
+          <mat-icon (click)="deleteSingleService(i)" class="secondary-color">clear</mat-icon>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

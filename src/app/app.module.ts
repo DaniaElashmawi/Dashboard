@@ -4,8 +4,6 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 // Components
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './_components/dashboard/dashboard.component';
-import { ProjectsComponent } from './_components/projects/projects.component';
-import { CategoriesComponent } from './_components/categories/categories.component';
 import { ProfileComponent } from './_components/profile/profile.component';
 import { TeamComponent } from './_components/team/team.component';
 import { LayoutComponent } from './_layouts/layout/layout.component';
@@ -13,6 +11,8 @@ import { FooterComponent } from './_shared/footer/footer.component';
 import { HeaderComponent } from './_shared/header/header.component';
 import { SidebarComponent } from './_shared/sidebar/sidebar.component';
 import { LoginComponent } from './_components/login/login.component';
+import { ProjectsComponent, displayDialog, editDialog } from './_components/projects/projects.component';
+import { ServicesComponent, servicedisplayDialog, serviceeditDialog } from './_components/services/services.component';
 
 
 // Modules
@@ -28,7 +28,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     DashboardComponent,
     ProjectsComponent,
-    CategoriesComponent,
+    displayDialog,
+    editDialog,
     ProfileComponent,
     TeamComponent,
     LayoutComponent,
@@ -36,6 +37,9 @@ import { HttpClientModule } from '@angular/common/http';
     HeaderComponent,
     SidebarComponent,
     LoginComponent,
+    ServicesComponent,
+    servicedisplayDialog,
+    serviceeditDialog
   ],
   imports: [
     BrowserModule,
@@ -48,6 +52,8 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [displayDialog, editDialog, serviceeditDialog, servicedisplayDialog],
+
 })
 export class AppModule { }

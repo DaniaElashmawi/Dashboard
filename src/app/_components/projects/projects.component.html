@@ -1,44 +1,59 @@
-<section id="projects" class="container">
+<!DOCTYPE html>
 
+<section id="projects" class="container my-3">
 
+  <div class="mb-5">
+    <div class="row">
 
-  <div class="row ">
-
-    <div class="col-12">
-      <h5 class="projects-title">
-        Your Company Projects
-      </h5>
+      <div class="col-12">
+        <h5 class="projects-title">
+          Your Company Projects
+        </h5>
+      </div>
     </div>
-  </div>
 
-  <div class="projects row px-5">
+    <div class="projects row px-5 ">
 
-    <div class="my-4 col-md-4 project-box p-3" *ngFor="let project of projects ; index as index ">
+      <div class="my-4 col-md-4 position-relative project-box p-3" *ngFor="let project of projects ; index as index ">
 
-      <mat-card class="project-content position-relative">
-        {{project.name}}
+        <mat-card class="project-content position-relative">
+          <strong> {{project.title}}
+          </strong>
+
+
+
+          <div class="text-right position-absolute show-btn">
+            <button (click)="loadprojects(index)" class="btn ">Show all projects</button>
+          </div>
+
+        </mat-card>
+
+
+      </div>
+
+
+    </div>
+
+    <div class="add-btn secondary-color d-flex align-items-center">
+      <mat-icon>add</mat-icon>Add New Project!
+    </div>
+
+
+    <div [ngClass]=" proj? 'show' : 'hide' " class="row p-5">
+
+
+      <div class="single-project col-12 p-3 my-3 " *ngFor="let proj of projectsDetails ; index as i">
+        <h5><span>{{i + 1}}. </span>{{proj.title}}</h5>
+        <!-- <p> {{proj.description}} </p> -->
 
         <div class="position-absolute project-setting">
 
-
-          <mat-icon (click)="popup(index)">visibility</mat-icon>
-          <mat-icon class="edit-color">edit</mat-icon>
-          <mat-icon class="secondary-color">clear</mat-icon>
+          <mat-icon (click)="openDialog(i)">visibility</mat-icon>
+          <mat-icon (click)="openEditDialog(i)" class="edit-color">edit</mat-icon>
+          <mat-icon (click)="deleteSingleProject(i)" class="secondary-color">clear</mat-icon>
         </div>
-
-      </mat-card>
-
+      </div>
 
     </div>
-    <div *ngIf="isOpen" class="popup prim-color">
-      {{projects[index]['name']}}
-      <mat-icon (click)="isOpen=!isOpen">close</mat-icon>
-    </div>
-
   </div>
-
-  <div class="add-btn secondary-color d-flex align-items-center">
-    <mat-icon>add</mat-icon>Add New Project!
-  </div>
-
 </section>
