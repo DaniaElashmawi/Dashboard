@@ -23,7 +23,7 @@
                 <strong>Company Owner:</strong> {{currentCompanyInfo?.company_owner}}
               </h6>
 
-              <p class="profile-about-content mt-5">
+              <p class="profile-about-content mt-4">
                 {{currentCompanyInfo?.company_description}}
               </p>
             </div>
@@ -76,10 +76,10 @@
     <div class="row profile-setting  mt-5">
       <div class="col-12 text-center">
         <div (click)="profileEdit()" class="button-border btn  mx-3  d-inline-block  "><button
-            class="btn edit-profile">edit
+            class="btn edit-profile">Edit
             your profile</button>
         </div>
-        <div class="button-border btn  mx-3 d-inline-block"> <button class="btn  delete-profile  ">delete your
+        <div class="button-border btn  mx-3 d-inline-block"> <button class="btn  delete-profile  ">Delete your
             profile</button>
         </div>
       </div>
@@ -97,7 +97,7 @@
 
 <section id="profileEdit" *ngIf="profileHiddin " class="container">
   <div class="row">
-    <div class="col-12">
+    <div class="col-12 mb-4">
       <h5 class="profile-edit-title">Edit your profile</h5>
     </div>
 
@@ -107,8 +107,8 @@
           <div class="form-group mx-auto col-10">
             <label class="w-100" for="companyName">Company Name: </label>
             <input type="text" class="w-100" formControlName="companyName" required>
-            <div style="color:black"
-              *ngIf=" profileForm.controls.companyName.errors?.required && (profileForm.controls.companyName.dirty || profileForm.controls.companyName.touched)">
+            <div style="color:red" *ngIf=" profileForm.controls.companyName.errors?.required &&
+              (profileForm.controls.companyName.dirty || profileForm.controls.companyName.touched)">
               <h6>
                 Company Name is required.
               </h6>
@@ -120,7 +120,7 @@
               <div class="form-group  mx-auto col-6">
                 <label class="w-100" for="companyEmail">Email: </label>
                 <input class="w-100" type="email" formControlName="companyEmail" required>
-                <div style="color:black"
+                <div style="color:red"
                   *ngIf="profileForm.controls.companyEmail.errors?.required && (profileForm.controls.companyEmail.dirty || profileForm.controls.companyEmail.touched)">
                   <h6>
                     Company Email is required.
@@ -131,7 +131,7 @@
               <div class="form-group  mx-auto col-6">
                 <label class="w-100" for="companyTel">telephone: </label>
                 <input class="w-100" type="tel" formControlName="companyTel" required>
-                <div style="color:black"
+                <div style="color:red"
                   *ngIf="profileForm.controls.companyTel.errors?.required && (profileForm.controls.companyTel.dirty || profileForm.controls.companyTel.touched)">
                   <h6>
                     Company Telephone is required.
@@ -147,7 +147,7 @@
           <div class="form-group  mx-auto col-10">
             <label class="w-100" for="companyAddress">Address: </label>
             <input class="w-100" type="text" formControlName="companyAddress" required>
-            <div style="color:black"
+            <div style="color:red"
               *ngIf="profileForm.controls.companyAddress.errors?.required && (profileForm.controls.companyAddress.dirty || profileForm.controls.companyAddress.touched)">
               <h6>
                 Company Address is required.
@@ -162,7 +162,7 @@
               <div class="form-group  mx-auto col-6">
                 <label class="w-100" for="companyType">Company type: </label>
                 <input class="w-100" type="text" formControlName="companyType" required>
-                <div style="color:black"
+                <div style="color:red"
                   *ngIf="profileForm.controls.companyType.errors?.required && (profileForm.controls.companyType.dirty || profileForm.controls.companyType.touched)">
                   <h6>
                     Company type is required.
@@ -173,7 +173,7 @@
               <div class="form-group  mx-auto col-6">
                 <label class="w-100" for="packageSubs">Package subscription: </label>
                 <input class="w-100" type="text" formControlName="packageSubs" required>
-                <div style="color:black"
+                <div style="color:red"
                   *ngIf="profileForm.controls.packageSubs.errors?.required && (profileForm.controls.packageSubs.dirty || profileForm.controls.packageSubs.touched)">
                   <h6>
                     package subscription is required.
@@ -181,6 +181,7 @@
                 </div>
               </div>
             </div>
+
           </div>
 
           <div class="form-group mx-auto col-10">
@@ -197,7 +198,7 @@
 
 
 
-        <div class="row form-setting mt-5">
+        <div class="row form-setting my-5">
           <div class="col-12 text-center">
             <div class="button-border btn  mx-3  d-inline-block  ">
               <button [disabled]="!profileForm.valid" class="btn save-profile">

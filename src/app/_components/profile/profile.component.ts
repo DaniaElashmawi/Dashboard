@@ -39,6 +39,7 @@ export class ProfileComponent implements OnInit {
   }
 
   onSubmit(profileform) {
+
     this.profileHiddin = false;
   }
   onCancel() {

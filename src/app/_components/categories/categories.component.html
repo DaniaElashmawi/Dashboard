@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<section id="categories" class="container my-3">
+
+  <div class="mb-5 pb-5">
+
+    <div class="row">
+      <div class="col-12">
+        <h5 class="categories-title">
+          Your Company Categories
+        </h5>
+      </div>
+    </div>
+
+
+
+    <div class="s-categories px-5  ">
+
+      <div class="row ">
+        <div class="col-12 py-2 s-categories-title">
+          <h5 class=" d-inline ">
+            Services Main Categories:
+          </h5>
+        </div>
+      </div>
+
+      <div class="row s-list py-3">
+
+        <div class="s-list-item col-12" *ngFor=" let scat of sCategories ; index as i">
+
+          <div #target class=" s-list-item-top">
+            <span>{{i+1}}. {{scat.title}}</span>
+            <div class="">
+              <mat-icon (click)="open(scat)" class="mx-2">visibility</mat-icon>
+              <mat-icon (click)="openEditDialog(i)" class="edit-color mx-2">edit</mat-icon>
+              <mat-icon (click)="deleteCat(i)" class="secondary-color mx-2">clear</mat-icon>
+            </div>
+          </div>
+
+          <div class="s-list-item-content" [ngClass]=" [scat.active? 'show':'hide' ] ">
+            <p><strong>Description: </strong>{{scat.description}}</p>
+
+          </div>
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="s-categories px-5">
+
+      <div class="row ">
+        <div class="col-12 py-2 s-categories-title">
+          <h5 class=" d-inline ">
+            Services Main Categories:
+          </h5>
+        </div>
+      </div>
+
+      <div class="row s-list py-3">
+        <div class="col-12">
+          Lorem ipsum dolor sit amet, consectetur
+        </div>
+        <div class="col-12">
+          Lorem ipsum dolor sit amet, consectetur
+        </div>
+      </div>
+
+    </div>
+
+
+
+  </div>
+</section>

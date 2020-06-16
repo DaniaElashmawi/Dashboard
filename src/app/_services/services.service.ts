@@ -31,7 +31,7 @@ export class ServicesService {
 
   /////////////////////////////////////////////////////////////////////////////////////////
 
-  deleteService(index) {
+  deleteService(index): Observable<any> {
     // console.log(this.authSer.currentUserValue['data']['api_token']);
 
     return this._HttpClient.delete(`${environment.apiUrl}/api/services/${this.authSer.currentUserValue['data']['id']}/${index}`, {
@@ -44,5 +44,38 @@ export class ServicesService {
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+  editService(index, s_fd): Observable<any> {
+
+    return this._HttpClient.post(`${environment.apiUrl}/api/services/${this.authSer.currentUserValue['data']['id']}/${index}`,
+      s_fd, {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authSer.currentUserValue['data']['api_token']}`,
+      })
+    });
+
+
+  }
+
+
+  /////////////////////////////////////////////////////////////////////////////////////////
+
+
+  addNewService(new_sfd): Observable<any> {
+    return this._HttpClient.post(`${environment.apiUrl}/api/services/${this.authSer.currentUserValue['data']['id']} `,
+      new_sfd, {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authSer.currentUserValue['data']['api_token']}`,
+      })
+
+    });
+  }
+
+
+
 
 }

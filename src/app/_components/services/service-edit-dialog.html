@@ -1,0 +1,47 @@
+<form id="editServcieForm" [formGroup]="editServcieForm" (ngSubmit)="editservice()" #form="ngForm" class="container"
+  novalidate>
+  <div class="row">
+
+    <div class="form-group mx-auto col-10">
+      <label class="w-100" for="serviceName">service Name: </label>
+      <input type="text" class="w-100" formControlName="serviceName">
+      <div *ngIf=" editServcieForm.controls.serviceName.errors?.required &&
+           (editServcieForm.controls.serviceName.dirty || editServcieForm.controls.serviceName.touched)" required>
+        <span>
+          service name is required.
+        </span>
+      </div>
+    </div>
+
+
+
+    <div class="form-group mx-auto col-10">
+      <label class="w-100" for="serviceDesc">service Description: </label>
+      <textarea cols="30" rows="5" type="text" class="w-100" formControlName="serviceDesc">
+  </textarea>
+      <div *ngIf=" editServcieForm.controls.serviceDesc.errors?.required &&
+       (editServcieForm.controls.serviceDesc.dirty || editServcieForm.controls.serviceDesc.touched)" required>
+        <span>
+          service description is required.
+        </span>
+      </div>
+    </div>
+
+
+    <div class="row form-setting mt-5">
+      <div class="col-12 text-center">
+        <div class="button-border btn  mx-3  d-inline-block  ">
+          <button [mat-dialog-close] type="submit" [disabled]="!editServcieForm.valid" class="btn save-edit">
+            SAVE</button>
+        </div>
+        <div class="button-border btn mx-3 d-inline-block">
+          <button [mat-dialog-close] class="btn cancel-edit  ">
+            CANCEL</button>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</form>

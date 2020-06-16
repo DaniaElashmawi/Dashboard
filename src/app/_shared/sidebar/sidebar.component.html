@@ -7,6 +7,7 @@
       <span class="prim-color">Dashboard</span>
     </ng-template>
   </mat-list-item>
+
   <mat-divider></mat-divider>
   <mat-list-item routerLinkActive="active" [routerLink]="['/dashboard/profile']">
     <mat-icon class="mr-1  prim-color">account_box</mat-icon>
@@ -14,9 +15,15 @@
   </mat-list-item>
   <mat-divider></mat-divider>
 
+  <mat-list-item routerLinkActive="active" [routerLink]="['/dashboard/categories']">
+    <mat-icon class="mr-1  prim-color">category</mat-icon>
+    <ng-template [ngIf]="togglevar"><span class="prim-color">categories</span></ng-template>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+
   <mat-list-item routerLinkActive="active" [routerLink]="['/dashboard/services']">
     <mat-icon class="mr-1  prim-color">list</mat-icon>
-    <ng-template [ngIf]="togglevar"><span class="prim-color">categories</span></ng-template>
+    <ng-template [ngIf]="togglevar"><span class="prim-color">services</span></ng-template>
   </mat-list-item>
   <mat-divider></mat-divider>
 

@@ -1,0 +1,13 @@
+* {
+  font-size: 14px;
+}
+
+a {
+  color: black;
+  font-weight: 800;
+}
+
+a:hover {
+  color: #f60000;
+  text-decoration: none;
+}

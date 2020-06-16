@@ -1,7 +1,10 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Output, Input, EventEmitter } from '@angular/core';
 import { ServicesService } from '../../_services/services.service';
+import { AuthService } from '../../_authentication/auth.service';
+import { CategoriesService } from '../../_services/categories.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+
 
 export interface DialogData {
   index: number;
@@ -10,9 +13,10 @@ export interface DialogData {
 
 
 export interface EditDialogData {
-  index: number;
-  services;
+  editindex: number;
+  servicesDetails;
 }
+
 
 @Component({
   selector: 'app-services',
@@ -21,17 +25,37 @@ export interface EditDialogData {
 })
 export class ServicesComponent implements OnInit {
 
+
+  newService = new FormGroup({
+    newServiceName: new FormControl('', Validators.required),
+    newServiceCat: new FormControl('', Validators.required),
+    newServiceDesc: new FormControl('', Validators.required),
+    newServiceImg: new FormControl('', Validators.required)
+
+  });
+
+  newCat = new FormGroup({
+    newCatName: new FormControl('', Validators.required),
+    newCatDesc: new FormControl('', Validators.required),
+    newCatImg: new FormControl('', Validators.required)
+
+  });
+
   services;
   serv: boolean = false;
   servicesDetails;
   index: number;
-  // isOpen: boolean = false;
   editindex: number;
   currentService;
 
+  newImgLabel = "Upload an image ...";
+  nonewService: boolean = true;
+  nonewCategory: boolean = true;
+  mainCategories = [];
 
-  constructor(public dialog: MatDialog, public _SerService: ServicesService) { }
-  o
+  constructor(public dialog: MatDialog, public _SerService: ServicesService,
+    private _authSer: AuthService, private _catServ: CategoriesService) { }
+
   openDialog(i): void {
     console.log('The display dialog was opened');
     this.index = i;
@@ -57,7 +81,8 @@ export class ServicesComponent implements OnInit {
     const dialogRef = this.dialog.open(serviceeditDialog, {
       width: '800px',
       data: {
-        index: this.editindex, services: this.services
+        editindex: this.editindex, servicesDetails: this.servicesDetails
+
       }
     });
 
@@ -75,7 +100,12 @@ export class ServicesComponent implements OnInit {
   loadAllServicesCat() {
     return this._SerService.getAllServicesCat().subscribe(data => {
       this.services = data;
-      console.log(data);
+
+      this.services.forEach((service, i) => {
+        this.mainCategories[i] = service['title'];
+      });
+
+      // console.log(this.services, this.mainCategories);
     });
   }
 
@@ -87,6 +117,8 @@ export class ServicesComponent implements OnInit {
       console.log(this.servicesDetails);
       this.serv = true;
     });
+
+
   }
 
   deleteSingleService(i) {
@@ -102,6 +134,82 @@ export class ServicesComponent implements OnInit {
     });
   }
 
+  imgFile = null;
+  readFile(file) {
+    this.imgFile = file[0];
+    if (this.imgFile) {
+      this.newImgLabel = this.imgFile.name;
+    }
+    else {
+      this.newImgLabel = "Upload an image ...";
+    }
+    console.log(this.imgFile);
+
+  }
+
+  submitNewService(f) {
+    // console.log(f);
+
+    let new_sname = f['newServiceName'];
+    let new_scat = f['newServiceCat'];
+    let new_sdesc = f['newServiceDesc'];
+    let cat_id;
+
+    for (let x of this.services) {
+      if (x['title'] == new_scat) {
+        cat_id = x['id']
+      }
+
+    }
+
+
+    let new_sfd = new FormData;
+    new_sfd.append('title', new_sname);
+    new_sfd.append('category', cat_id);
+    new_sfd.append('description', new_sdesc);
+    new_sfd.append('company', this._authSer.currentUserValue['data']['id']);
+    new_sfd.append('photo', this.imgFile);
+    // console.log(new_simg)
+    this._SerService.addNewService(new_sfd).subscribe(res => {
+      console.log(res);
+    },
+      err => {
+        console.log(err);
+      });
+    this.newService.reset();
+    this.nonewService = !this.nonewService;
+
+  }
+
+
+
+
+  submitNewCat(f) {
+    let new_cname = f['newCatName'];
+    let new_cdesc = f['newCatDesc'];
+
+
+    let new_cfd = new FormData;
+    new_cfd.append('title', new_cname);
+    new_cfd.append('category', 'service');
+    new_cfd.append('description', new_cdesc);
+    new_cfd.append('company', this._authSer.currentUserValue['data']['id']);
+    new_cfd.append('photo', this.imgFile);
+
+    // console.log(new_simg)
+
+    this._catServ.addNewCategory(new_cfd).subscribe(res => {
+      console.log(res);
+      this.services.push(res);
+    }
+      ,
+      err => console.log(err)
+    );
+
+    this.newCat.reset();
+    this.nonewCategory = !this.nonewCategory;
+
+  }
 
 
   ngOnInit() {
@@ -140,42 +248,50 @@ export class servicedisplayDialog {
 
 })
 export class serviceeditDialog {
-  // editForm = new FormGroup({
-  //   projectName: new FormControl('', Validators.required),
-  //   projectDesc: new FormControl('', Validators.required),
-  //   projectCategory: new FormControl('', Validators.required)
 
-  // });
-  editForm: FormGroup;
+
+
+  editServcieForm = new FormGroup({
+    serviceName: new FormControl('', Validators.required),
+    serviceDesc: new FormControl('', Validators.required),
+
+  });
 
   constructor(
     public dialogRef: MatDialogRef<serviceeditDialog>,
     @Inject(MAT_DIALOG_DATA) public data: EditDialogData,
-    private _SerService: ServicesService,
-    _formBuilder: FormBuilder) {
-    this.editForm = _formBuilder.group({
-      projectName: [" "],
-      projectDesc: [" "],
-      projectCategory: []
-    });
+    private _SerService: ServicesService) { }
+
+
+  editservice() {
+    let sname = this.editServcieForm.get('serviceName').value;
+    let sdesc = this.editServcieForm.get('serviceDesc').value;
+
+    const s_fd = new FormData();
+    // console.log(this.editServcieForm.value);
+    s_fd.append('title', sname);
+    s_fd.append('description', sdesc);
+    s_fd.append('_method', 'put');
+
+    let id = this.data.servicesDetails[this.data.editindex]['id'];
+    // console.log(this.data.projectsDetails[this.data.editindex], id);
+
+    this._SerService.editService(id, s_fd).subscribe(res => {
+      console.log(res);
+    },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
 
 
-  // editProject() {
-  //   console.log(this.editForm.value);
-  //   let pname = this.editForm.get('projectName').value;
-  //   console.log(pname);
-  //   let id = this.data.services[this.data.index]['id'];
-  //   // console.log(this.data.services[this.data.index])
-  //   this._SerService.editProject(id, this.editForm.get('projectName').value).subscribe(res => {
-  //     console.log(res);
-  //   }),
-  //     (err => {
-  //       console.log(err);
-  //     });
 
-  // }
+
+
+
+
 
 
 }

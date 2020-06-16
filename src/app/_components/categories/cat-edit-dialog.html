@@ -1,0 +1,29 @@
+<form id="editCat" [formGroup]="editCat" (ngSubmit)="editCatSubmit(editCat.value)" #form="ngForm" class="container"
+  novalidate>
+  <div class="row">
+
+    <div class="form-group mx-auto col-10">
+      <label class="w-100" for="catName">Category Name: </label>
+      <input type="text" class="w-100" formControlName="catName">
+
+    </div>
+
+
+
+    <div class="form-group mx-auto col-10">
+      <label class="w-100" for="catDesc">Category Description: </label>
+      <textarea cols="30" rows="5" type="text" class="w-100" formControlName="catDesc">
+  </textarea>
+
+    </div>
+
+
+    <div class="col-12 form-setting mt-5 text-center">
+      <button [mat-dialog-close] type="submit" class="btn mx-2 ">
+        SAVE</button>
+      <button [mat-dialog-close] class="btn mx-2 ">
+        CANCEL</button>
+    </div>
+
+  </div>
+</form>

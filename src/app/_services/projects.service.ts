@@ -29,7 +29,7 @@ export class ProjectsService {
 
   /////////////////////////////////////////////////////////////////////////////////////////
 
-  deleteProject(index) {
+  deleteProject(index): Observable<any> {
     // console.log(this.authSer.currentUserValue['data']['api_token']);
 
     return this._HttpClient.delete(`${environment.apiUrl}/api/projects/${this.authSer.currentUserValue['data']['id']}/${index}`, {
@@ -43,24 +43,31 @@ export class ProjectsService {
 
   /////////////////////////////////////////////////////////////////////////////////////////
 
-  editProject(index, fd) {
+  editProject(index, fd): Observable<any> {
 
-    console.log(fd);
     return this._HttpClient.post(`${environment.apiUrl}/api/projects/${this.authSer.currentUserValue['data']['id']}/${index}`,
-      {
-        'title': fd.projectName,
-        'description': fd.projectDesc,
-        '_method': 'put'
-      }, {
+      fd, {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
+        'Accept': 'application/json',
         'Authorization': `Bearer ${this.authSer.currentUserValue['data']['api_token']}`,
       })
     });
 
 
   }
+  ///////////////////////////////////////////////////////////////////////////////////////
 
+
+  addNewProject(new_pfd): Observable<any> {
+    return this._HttpClient.post(`${environment.apiUrl}/api/projects/${this.authSer.currentUserValue['data']['id']} `,
+      new_pfd, {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authSer.currentUserValue['data']['api_token']}`,
+      })
+
+    });
+  }
 
 
 
