@@ -48,7 +48,7 @@ export class ProjectsComponent implements OnInit {
   editindex: number;
   currentProject;
 
-  newImgLabel = "Upload an image ...";
+  newImgLabel = 'Upload an image ...';
   nonewProject: boolean = true;
   nonewCategory: boolean = true;
   pMainCategories = [];
@@ -156,7 +156,7 @@ export class ProjectsComponent implements OnInit {
 
     for (let x of this.projects) {
       if (x['title'] == new_pcat) {
-        cat_id = x['id']
+        cat_id = x['id'];
       }
 
     }
@@ -249,8 +249,8 @@ export class displayDialog {
 export class editDialog {
 
   editForm = new FormGroup({
-    projectName: new FormControl('', Validators.required),
-    projectDesc: new FormControl('', Validators.required),
+    title: new FormControl(''),
+    description: new FormControl(''),
 
   });
 
@@ -263,15 +263,19 @@ export class editDialog {
 
 
 
-  editProject() {
-    let pname = this.editForm.get('projectName').value;
-    let pdesc = this.editForm.get('projectDesc').value;
+  editProject(f) {
 
+    console.log(f);
     const fd = new FormData();
-    // console.log(this.editForm.value);
-    // fd.append('data', formdata);
-    fd.append('title', pname);
-    fd.append('description', pdesc);
+
+    for (let key in f) {
+      if (f[key]) {
+        fd.append(`${key}`, f[key]);
+        console.log(key, f[key]);
+      }
+    }
+
+
     fd.append('_method', 'put');
 
     let id = this.data.projectsDetails[this.data.editindex]['id'];

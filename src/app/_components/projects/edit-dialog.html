@@ -1,43 +1,38 @@
-<form id="editForm" [formGroup]="editForm" (ngSubmit)="editProject()" #form="ngForm" class="container" novalidate>
+<form id="editForm" [formGroup]="editForm" (ngSubmit)="editProject(editForm.value)" class="container" novalidate>
   <div class="row">
 
     <div class="form-group mx-auto col-10">
-      <label class="w-100" for="projectName">Project Name: </label>
-      <input type="text" class="w-100" formControlName="projectName">
-      <div *ngIf=" editForm.controls.projectName.errors?.required &&
+      <label class="w-100" for="title">Project Name: </label>
+      <input type="text" class="w-100" formControlName="title">
+      <!-- <div *ngIf=" editForm.controls.projectName.errors?.required &&
            (editForm.controls.projectName.dirty || editForm.controls.projectName.touched)" required>
         <span>
           Project Name is required.
         </span>
-      </div>
+      </div> -->
     </div>
 
 
 
     <div class="form-group mx-auto col-10">
-      <label class="w-100" for="projectDesc">Project Description: </label>
-      <textarea cols="30" rows="5" type="text" class="w-100" formControlName="projectDesc">
+      <label class="w-100" for="description">Project Description: </label>
+      <textarea cols="30" rows="5" type="text" class="w-100" formControlName="description">
   </textarea>
-      <div *ngIf=" editForm.controls.projectDesc.errors?.required &&
+      <!-- <div *ngIf=" editForm.controls.projectDesc.errors?.required &&
        (editForm.controls.projectDesc.dirty || editForm.controls.projectDesc.touched)" required>
         <span>
           Project Description is required.
         </span>
-      </div>
+      </div> -->
     </div>
 
 
-    <div class="row form-setting mt-5">
-      <div class="col-12 text-center">
-        <div class="button-border btn  mx-3  d-inline-block  ">
-          <button [mat-dialog-close] type="submit" [disabled]="!editForm.valid" class="btn save-edit">
-            SAVE</button>
-        </div>
-        <div class="button-border btn mx-3 d-inline-block">
-          <button [mat-dialog-close] class="btn cancel-edit  ">
-            CANCEL</button>
-        </div>
-      </div>
+    <div class=" col-12 text-center form-setting mt-5">
+
+      <button [mat-dialog-close] type="submit" [disabled]="!editForm.valid" class="btn mx-2">
+        SAVE</button>
+      <button [mat-dialog-close] class="btn mx-2 ">
+        CANCEL</button>
     </div>
 
 

@@ -252,8 +252,8 @@ export class serviceeditDialog {
 
 
   editServcieForm = new FormGroup({
-    serviceName: new FormControl('', Validators.required),
-    serviceDesc: new FormControl('', Validators.required),
+    title: new FormControl(''),
+    description: new FormControl(''),
 
   });
 
@@ -263,14 +263,19 @@ export class serviceeditDialog {
     private _SerService: ServicesService) { }
 
 
-  editservice() {
-    let sname = this.editServcieForm.get('serviceName').value;
-    let sdesc = this.editServcieForm.get('serviceDesc').value;
+  editservice(f) {
+    console.log(f);
 
     const s_fd = new FormData();
-    // console.log(this.editServcieForm.value);
-    s_fd.append('title', sname);
-    s_fd.append('description', sdesc);
+
+    for (let key in f) {
+      if (f[key]) {
+        s_fd.append(`${key}`, f[key]);
+        console.log(key, f[key]);
+      }
+    }
+
+
     s_fd.append('_method', 'put');
 
     let id = this.data.servicesDetails[this.data.editindex]['id'];

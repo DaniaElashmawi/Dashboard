@@ -13,7 +13,7 @@ import { SidebarComponent } from './_shared/sidebar/sidebar.component';
 import { LoginComponent } from './_components/login/login.component';
 import { ProjectsComponent, displayDialog, editDialog } from './_components/projects/projects.component';
 import { ServicesComponent, servicedisplayDialog, serviceeditDialog } from './_components/services/services.component';
-import { CategoriesComponent, CatEditDialog } from './_components/categories/categories.component';
+import { CategoriesComponent, CatEditDialog, CatPEditDialog } from './_components/categories/categories.component';
 
 
 // Modules
@@ -42,7 +42,8 @@ import { HttpClientModule } from '@angular/common/http';
     servicedisplayDialog,
     serviceeditDialog,
     CategoriesComponent,
-    CatEditDialog
+    CatEditDialog,
+    CatPEditDialog
   ],
   imports: [
     BrowserModule,
@@ -56,7 +57,8 @@ import { HttpClientModule } from '@angular/common/http';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [displayDialog, editDialog, serviceeditDialog, servicedisplayDialog, CatEditDialog]
+  entryComponents: [displayDialog, editDialog, serviceeditDialog,
+    servicedisplayDialog, CatEditDialog, CatPEditDialog]
 
 })
 export class AppModule { }

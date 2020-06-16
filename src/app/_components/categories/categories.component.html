@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 
-<section id="categories" class="container my-3">
+<section *ngIf="nonewCategory " id="categories" class="container my-3">
 
-  <div class="mb-5 pb-5">
+  <div class="mb-5">
 
     <div class="row">
       <div class="col-12">
@@ -14,13 +14,17 @@
 
 
 
+    <div (click)="nonewCategory=!nonewCategory" class="cat-btn secondary-color d-flex align-items-center">
+      <mat-icon>add</mat-icon>Add New Category
+    </div>
+
     <div class="s-categories px-5  ">
 
       <div class="row ">
         <div class="col-12 py-2 s-categories-title">
-          <h5 class=" d-inline ">
+          <h4>
             Services Main Categories:
-          </h5>
+          </h4>
         </div>
       </div>
 
@@ -52,28 +56,148 @@
 
 
 
-    <div class="s-categories px-5">
+    <div class="p-categories px-5">
 
       <div class="row ">
-        <div class="col-12 py-2 s-categories-title">
-          <h5 class=" d-inline ">
-            Services Main Categories:
-          </h5>
+        <div class="col-12 py-2 p-categories-title">
+          <h4>
+            Projects Main Categories:
+          </h4>
         </div>
       </div>
 
-      <div class="row s-list py-3">
-        <div class="col-12">
-          Lorem ipsum dolor sit amet, consectetur
-        </div>
-        <div class="col-12">
-          Lorem ipsum dolor sit amet, consectetur
-        </div>
-      </div>
+      <div class="row p-list py-3">
 
+        <div class="p-list-item col-12" *ngFor=" let pcat of pCategories ; index as i">
+
+          <div #target class=" s-list-item-top">
+            <span>{{i+1}}. {{pcat.title}}</span>
+            <div class="">
+              <mat-icon (click)="open(pcat)" class="mx-2">visibility</mat-icon>
+              <mat-icon (click)="openPEditDialog(i)" class="edit-color mx-2">edit</mat-icon>
+              <mat-icon (click)="deletePCat(i)" class="secondary-color mx-2">clear</mat-icon>
+            </div>
+          </div>
+
+          <div class="s-list-item-content" [ngClass]=" [pcat.active? 'show':'hide' ] ">
+            <p><strong>Description: </strong>{{pcat.description}}</p>
+
+          </div>
+
+
+
+        </div>
+
+      </div>
     </div>
 
 
 
   </div>
 </section>
+
+
+<ng-container *ngIf="!nonewCategory">
+
+  <div class="container my-3" id="newCategory">
+    <div class="mb-5">
+      <div class="row">
+
+        <div class="col-12">
+          <h5 class="newCat-title">
+            Add New Category !
+          </h5>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <form [formGroup]="newCat" (ngSubmit)="submitNewCat(newCat.value)" class=" px-5 ">
+
+            <div class="row ">
+
+              <div class="form-group mx-auto col-10">
+                <label class="w-100" for="newCatName">Category Name: </label>
+                <input type="text" id="newCatName" class="w-100" formControlName="newCatName" required>
+                <div style="color:red" *ngIf=" newCat.controls.newCatName.errors?.required &&
+                 (newCat.controls.newCatName.dirty || newCat.controls.newCatName.touched)">
+                  <h6>
+                    Category name is required.
+                  </h6>
+                </div>
+              </div>
+
+
+              <div class="col-10 form-group mx-auto">
+                <div class="row">
+                  <div class="form-group mx-auto col-6">
+                    <label class="w-100">Category Image: </label>
+                    <label class="w-100  cat-img" for="newCatImg">{{newImgLabel}}</label>
+                    <input type="file" accept="image/*" id="newCatImg" formControlName="newCatImg" required
+                      (change)="readFile($event.target.files)">
+
+                    <div style="color:red" *ngIf=" newCat.controls.newCatImg.errors?.required &&
+                     (newCat.controls.newCatImg.errors?.noFile || newCat.controls.newCatImg.touched )">
+                      <h6>
+                        Category image is required.
+                      </h6>
+                    </div>
+
+
+                  </div>
+
+                  <div class="form-group mx-auto col-6">
+                    <label class="w-100">Category Type: </label>
+                    <select formControlName="newCatType" id="newCatType" required class="w-100">
+                      <option disabled>Choose the category type: </option>
+                      <option *ngFor="let cat of categoriesTypes">{{cat}}</option>
+                    </select>
+
+                    <div style="color:red" *ngIf=" newCat.controls.newCatType.errors?.required &&
+                     (newCat.controls.newCatType.dirty || newCat.controls.newCatType.touched )">
+                      <h6>
+                        Category type is required.
+                      </h6>
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+              </div>
+
+
+
+              <div class="form-group mx-auto col-10">
+                <label class="w-100" for="newCatDesc">Category Description: </label>
+                <textarea cols="30" rows="5" type="text" class="w-100" formControlName="newCatDesc" required></textarea>
+                <div style="color:red" *ngIf=" newCat.controls.newCatDesc.errors?.required &&
+                 (newCat.controls.newCatDesc.dirty || newCat.controls.newCatDesc.touched)">
+                  <h6>
+                    Category description is required.
+                  </h6>
+                </div>
+              </div>
+
+            </div>
+            <div class="row form-setting my-5">
+              <div class="col-12  text-center">
+                <button type="submit" [disabled]="!newCat.valid" class="btn mx-3">
+                  SAVE</button>
+
+                <button class="btn mx-3" (click)="nonewCategory=!nonewCategory">
+                  CANCEL</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>
+
+</ng-container>

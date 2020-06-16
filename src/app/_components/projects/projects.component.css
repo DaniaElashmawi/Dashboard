@@ -264,3 +264,32 @@
   color: #fff;
   cursor: pointer;
 }
+
+
+.form-setting button:nth-of-type(1) {
+  background-color: #F60000;
+  color: #fff;
+}
+
+.form-setting button:nth-of-type(2) {
+  background-color: #000;
+  color: #fff;
+}
+
+#editForm textarea {
+  resize: none;
+  border-radius: 5px;
+  border: 1px solid #f2f2f2eb;
+  color: #646464;
+  font-size: 15px;
+  background-color: #f2f2f2eb;
+}
+
+#editForm input {
+  border-radius: 5px;
+  border: 1px solid #f2f2f2eb;
+  color: #646464;
+  padding: 6px;
+  font-size: 15px;
+  background-color: #f2f2f2eb;
+}
