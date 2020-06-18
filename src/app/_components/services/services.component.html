@@ -7,7 +7,7 @@
 
       <div class="col-12">
         <h5 class="services-title">
-          Your Company Services!
+          Your Company Services
         </h5>
       </div>
     </div>
@@ -17,10 +17,10 @@
       <div class="my-3 col-md-4  service-box p-3" *ngFor="let service of services ; index as index ">
 
         <mat-card class="service-content position-relative ">
-          <strong> {{service.title}}
-          </strong>
-          <p class="mb-5">{{service.description}}</p>
 
+          <mat-icon (click)="delCat(index)" class="secondary-color float-right">clear</mat-icon>
+          <h5>{{service.title}}</h5>
+          <!-- <p class="mb-5">{{service.description}}</p> -->
           <div class="text-right position-absolute show-btn">
             <button (click)="loadservices(index)" class="btn ">Show all Services</button>
           </div>
@@ -93,7 +93,6 @@
                   <div class="form-group mx-auto col-6">
                     <label class="w-100" for="newServiceCat">Service Category: </label>
                     <select formControlName="newServiceCat" id="newServiceCat" required class="w-100">
-                      <option disabled>Choose the category</option>
                       <option *ngFor="let cat of mainCategories">{{cat}}</option>
                     </select>
                     <div style="color:red" *ngIf=" newService.controls.newServiceCat.errors?.required &&

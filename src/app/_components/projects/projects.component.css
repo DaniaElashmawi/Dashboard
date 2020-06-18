@@ -3,7 +3,9 @@
   box-shadow: none;
 }
 
-
+mat-icon {
+  cursor: pointer;
+}
 
 #projects {
   background-color: #fff;
@@ -30,6 +32,11 @@
   border: 1px #e3e3e3 solid;
 }
 
+#projects .project-content h5 {
+  font-weight: 700;
+  font-size: 18px;
+}
+
 #projects .project-box {
   min-height: 160px;
 }
@@ -46,6 +53,8 @@
 #projects .show-btn button {
   background-color: #F60000;
   color: white;
+  font-size: 14px;
+
 }
 
 #projects .cat-btn {
@@ -75,9 +84,13 @@
   border: 1px #e3e3e3 solid;
 }
 
+#projects .single-project h5 {
+  font-size: 17px;
+  font-weight: 700;
+}
+
 #projects .project-setting mat-icon {
   margin: 0 10px;
-  cursor: pointer;
 }
 
 
@@ -94,6 +107,10 @@
 #editForm span {
   font-size: 12px;
   font-weight: 800;
+}
+
+#editForm label {
+  font-weight: 700;
 }
 
 .projects-list {}

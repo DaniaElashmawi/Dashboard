@@ -17,9 +17,11 @@
       <div class="my-3 col-md-4 project-box p-3" *ngFor="let project of projects ; index as index ">
 
         <mat-card class="project-content position-relative  ">
-          <strong> {{project.title}}</strong>
 
-          <p class="mb-5">{{project.description}}</p>
+          <mat-icon (click)="deleteCat(index)" class="secondary-color float-right">clear</mat-icon>
+
+          <h5>{{project.title}}</h5>
+          <!-- <p class="mb-5">{{project.description}}</p> -->
 
 
           <div class="text-right position-absolute show-btn">
@@ -39,7 +41,7 @@
     </div>
 
     <div (click)="nonewProject=!nonewProject" class="proj-btn secondary-color d-flex align-items-center">
-      <mat-icon>add</mat-icon>Add New Project!
+      <mat-icon>add</mat-icon>Add New Project
     </div>
 
     <div [ngClass]=" proj? 'show' : 'hide' " class="row p-5">

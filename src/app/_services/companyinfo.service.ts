@@ -15,10 +15,11 @@ export class CompanyinfoService {
     return this._httpClient.get(`${environment.apiUrl}/api/company_infs/${this._authSer.currentUserValue['data']['id']}`);
 
   }
+
   ///////////////////////////////////////////////////////////////////////////////////////////////
 
-  editProfile(profile_fd) {
-    return this._httpClient.post(`${environment.apiUrl}/api/company_infs/${this._authSer.currentUserValue['data']['id']} `,
+  editProfile(profile_fd, id): Observable<any> {
+    return this._httpClient.post(`${environment.apiUrl}/api/company_infs/${this._authSer.currentUserValue['data']['id']}/${id} `,
       profile_fd, {
       headers: new HttpHeaders({
         'Accept': 'application/json',
@@ -26,6 +27,18 @@ export class CompanyinfoService {
       })
 
     });
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+  deleteProfile(id): Observable<any> {
+    return this._httpClient.delete(`${environment.apiUrl}/api/company_infs/${this._authSer.currentUserValue['data']['id']}/${id}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this._authSer.currentUserValue['data']['api_token']}`,
+      })
+    });
+
   }
 
 

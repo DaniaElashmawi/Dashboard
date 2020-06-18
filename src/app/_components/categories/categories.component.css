@@ -5,8 +5,8 @@
 
 
 .show {
-  height: 150px;
-  overflow: unset;
+  height: 100px;
+  overflow-y: scroll;
   transition: height .4s ease-out;
 
 }

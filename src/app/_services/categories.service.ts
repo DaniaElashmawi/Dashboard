@@ -50,7 +50,7 @@ export class CategoriesService {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  deleteSCAT(index): Observable<any> {
+  deleteCAT(index): Observable<any> {
     return this._httpClient.delete(`${environment.apiUrl}/api/categories/${this._authSer.currentUserValue['data']['id']}/${index}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

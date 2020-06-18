@@ -5,16 +5,7 @@ import { CategoriesService } from '../../_services/categories.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-export interface DialogData {
-  index: number;
-  currentProject;
-}
 
-
-export interface EditDialogData {
-  editindex: number;
-  projectsDetails;
-}
 
 
 @Component({
@@ -40,6 +31,8 @@ export class ProjectsComponent implements OnInit {
     newCatImg: new FormControl('', Validators.required)
 
   });
+  editDialogValue;
+  dialogValue;
 
   projects;
   proj: boolean = false;
@@ -81,7 +74,8 @@ export class ProjectsComponent implements OnInit {
     const dialogRef = this.dialog.open(editDialog, {
       width: '800px',
       data: {
-        editindex: this.editindex, projectsDetails: this.projectsDetails
+        editindex: this.editindex, projectsDetails: this.projectsDetails,
+        EditDialogValue: this.editDialogValue
       }
     });
 
@@ -90,7 +84,18 @@ export class ProjectsComponent implements OnInit {
 
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The edit dialog was closed');
+      if (result !== undefined) {
+        console.log('The edit dialog was closed', result);
+        this.dialogValue = result.receivedData;
+        for (let key in this.dialogValue) {
+          if (this.dialogValue[key]) {
+            this.projectsDetails[i][key] = this.dialogValue[key];
+          }
+        }
+      }
+      else {
+        console.log("no result from edit dialog");
+      }
     });
   }
 
@@ -131,6 +136,13 @@ export class ProjectsComponent implements OnInit {
     });
   }
 
+  deleteCat(index) {
+    let catID = this.projects[index]['id']
+    this._catServ.deleteCAT(catID).subscribe(res => {
+      this.pMainCategories = this.pMainCategories.filter(item => item['id'] !== catID);
+      this.projects = this.projects.filter(item => item['id'] !== catID);
+    });
+  }
 
 
   imgFile = null;
@@ -171,6 +183,7 @@ export class ProjectsComponent implements OnInit {
     // console.log(new_simg)
     this._projectsService.addNewProject(new_pfd).subscribe(res => {
       console.log(res);
+      this.projectsDetails.push(res);
     },
       err => {
         console.log(err);
@@ -231,7 +244,7 @@ export class displayDialog {
 
   constructor(
     public dialogRef: MatDialogRef<displayDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   // onClose(): void {
   //   this.dialogRef.close();
@@ -248,6 +261,7 @@ export class displayDialog {
 })
 export class editDialog {
 
+
   editForm = new FormGroup({
     title: new FormControl(''),
     description: new FormControl(''),
@@ -258,7 +272,7 @@ export class editDialog {
 
   constructor(
     public dialogRef: MatDialogRef<editDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: EditDialogData,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private _projectsService: ProjectsService) { }
 
 
@@ -287,14 +301,9 @@ export class editDialog {
       err => {
         console.log(err);
       }
+
     );
-
-
-
-
-
-
-
+    this.dialogRef.close({ event: 'close', receivedData: f });
 
   }
 

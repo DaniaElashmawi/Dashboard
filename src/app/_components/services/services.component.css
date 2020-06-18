@@ -4,6 +4,9 @@
 }
 
 
+mat-icon {
+  cursor: pointer;
+}
 
 #services {
   background-color: #fff;
@@ -30,6 +33,11 @@
   border: 1px #e3e3e3 solid;
 }
 
+#services .service-content h5 {
+  font-weight: 700;
+  font-size: 18px;
+}
+
 #services .service-box {
   min-height: 160px;
 }
@@ -46,6 +54,7 @@
 #services .show-btn button {
   background-color: #F60000;
   color: white;
+  font-size: 14px;
 }
 
 #services .cat-btn {
@@ -74,9 +83,13 @@
   border: 1px #e3e3e3 solid;
 }
 
+#services .single-service h5 {
+  font-size: 17px;
+  font-weight: 700;
+}
+
 #services .service-setting mat-icon {
   margin: 0 10px;
-  cursor: pointer;
 }
 
 
@@ -90,9 +103,13 @@
   color: #fff;
 }
 
-#editForm span {
+#editServcieForm span {
   font-size: 12px;
   font-weight: 800;
+}
+
+#editServcieForm label {
+  font-weight: 700;
 }
 
 .services-list {}

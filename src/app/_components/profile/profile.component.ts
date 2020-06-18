@@ -14,13 +14,14 @@ export class ProfileComponent implements OnInit {
   profileHiddin: boolean = false;
 
   profileForm = new FormGroup({
-    companyName: new FormControl('', Validators.required),
-    companyDesc: new FormControl('', Validators.required),
-    companyTel: new FormControl('', Validators.required),
-    companyType: new FormControl('', Validators.required),
-    companyEmail: new FormControl('', Validators.required),
-    packageSubs: new FormControl('', Validators.required),
-    companyAddress: new FormControl('', Validators.required),
+    company_name: new FormControl(''),
+    company_owner: new FormControl(''),
+    company_description: new FormControl(''),
+    telephone: new FormControl(''),
+    company_type: new FormControl(''),
+    companyEmail: new FormControl(''),
+    packageSubs: new FormControl(''),
+    companyAddress: new FormControl(''),
   });
 
 
@@ -38,12 +39,39 @@ export class ProfileComponent implements OnInit {
     this.profileHiddin = true;
   }
 
-  onSubmit(profileform) {
+  onSubmit(f) {
+    let id = this.currentCompanyInfo['id'];
+    console.log(id)
+    let profile_fd = new FormData();
 
+    for (let key in f) {
+      if (f[key]) {
+        profile_fd.append(`${key}`, f[key]);
+        console.log(key, f[key]);
+      }
+    }
+    profile_fd.append('_method', 'put');
+
+    this._CompanyinfoService.editProfile(profile_fd, id).subscribe(res => {
+      console.log(res);
+      for (let key in res) {
+        this.currentCompanyInfo[key] = res[key];
+      }
+
+    },
+      err => {
+        console.log(err);
+      });
+
+    this.profileForm.reset();
     this.profileHiddin = false;
   }
-  onCancel() {
-    // this.profileform.reset();
+
+  deleteProfile() {
+    let id = this.currentCompanyInfo['id'];
+    this._CompanyinfoService.deleteProfile(id).subscribe(res =>
+      console.log(res))
+
   }
 
 

@@ -1,21 +1,11 @@
-import { Component, OnInit, Inject, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Inject, Optional } from '@angular/core';
 import { ServicesService } from '../../_services/services.service';
 import { AuthService } from '../../_authentication/auth.service';
 import { CategoriesService } from '../../_services/categories.service';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 
-export interface DialogData {
-  index: number;
-  currentService;
-}
-
-
-export interface EditDialogData {
-  editindex: number;
-  servicesDetails;
-}
 
 
 @Component({
@@ -40,6 +30,9 @@ export class ServicesComponent implements OnInit {
     newCatImg: new FormControl('', Validators.required)
 
   });
+
+  dialogValue: any;
+  EditDialogValue: any;
 
   services;
   serv: boolean = false;
@@ -81,18 +74,30 @@ export class ServicesComponent implements OnInit {
     const dialogRef = this.dialog.open(serviceeditDialog, {
       width: '800px',
       data: {
-        editindex: this.editindex, servicesDetails: this.servicesDetails
+        editindex: this.editindex, servicesDetails: this.servicesDetails, services: this.services,
+        EditDialogValue: this.EditDialogValue
 
       }
     });
 
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = false;
 
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The edit dialog was closed');
+      console.log('The edit dialog was closed', result);
+      if (result !== undefined) {
+        console.log('The edit dialog was closed', result);
+        this.dialogValue = result.receivedData;
+        for (let key in this.dialogValue) {
+          if (this.dialogValue[key]) {
+            this.servicesDetails[i][key] = this.dialogValue[key];
+          }
+        }
+      }
+      else {
+        console.log("no result from edit dialog");
+      }
     });
+
   }
 
 
@@ -134,6 +139,18 @@ export class ServicesComponent implements OnInit {
     });
   }
 
+
+
+  delCat(index) {
+    let catID = this.services[index]['id'];
+    this._catServ.deleteCAT(catID).subscribe(res => {
+      this.mainCategories = this.mainCategories.filter(item => item['id'] !== catID);
+      this.services = this.services.filter(item => item['id'] !== catID);
+    });
+  }
+
+
+
   imgFile = null;
   readFile(file) {
     this.imgFile = file[0];
@@ -172,6 +189,7 @@ export class ServicesComponent implements OnInit {
     // console.log(new_simg)
     this._SerService.addNewService(new_sfd).subscribe(res => {
       console.log(res);
+      this.servicesDetails.push(res);
     },
       err => {
         console.log(err);
@@ -232,7 +250,7 @@ export class servicedisplayDialog {
 
   constructor(
     public dialogRef: MatDialogRef<servicedisplayDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   // onClose(): void {
   //   this.dialogRef.close();
@@ -250,7 +268,6 @@ export class servicedisplayDialog {
 export class serviceeditDialog {
 
 
-
   editServcieForm = new FormGroup({
     title: new FormControl(''),
     description: new FormControl(''),
@@ -258,14 +275,14 @@ export class serviceeditDialog {
   });
 
   constructor(
-    public dialogRef: MatDialogRef<serviceeditDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: EditDialogData,
+    public dialogRef: MatDialogRef<serviceeditDialog>, @Optional()
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private _SerService: ServicesService) { }
+
 
 
   editservice(f) {
     console.log(f);
-
     const s_fd = new FormData();
 
     for (let key in f) {
@@ -275,28 +292,22 @@ export class serviceeditDialog {
       }
     }
 
-
     s_fd.append('_method', 'put');
 
     let id = this.data.servicesDetails[this.data.editindex]['id'];
     // console.log(this.data.projectsDetails[this.data.editindex], id);
 
     this._SerService.editService(id, s_fd).subscribe(res => {
-      console.log(res);
+      // console.log(res);
+
     },
       err => {
         console.log(err);
       }
     );
+    this.dialogRef.close({ event: 'close', receivedData: f });
+
   }
-
-
-
-
-
-
-
-
 
 
 }

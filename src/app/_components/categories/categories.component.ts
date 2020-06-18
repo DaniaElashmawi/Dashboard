@@ -92,14 +92,14 @@ export class CategoriesComponent implements OnInit {
 
   deleteCat(index) {
     let catID = this.sCategories[index]['id'];
-    this._catSer.deleteSCAT(catID).subscribe(res => {
+    this._catSer.deleteCAT(catID).subscribe(res => {
       this.sCategories = this.sCategories.filter(item => item['id'] !== catID);
     });
   }
 
   deletePCat(index) {
     let catID = this.pCategories[index]['id'];
-    this._catSer.deleteSCAT(catID).subscribe(res => {
+    this._catSer.deleteCAT(catID).subscribe(res => {
       this.pCategories = this.pCategories.filter(item => item['id'] !== catID);
     });
   }
@@ -178,8 +178,8 @@ export class CatEditDialog {
 
 
   editCat = new FormGroup({
-    catName: new FormControl(''),
-    catDesc: new FormControl('')
+    title: new FormControl(''),
+    discription: new FormControl('')
     // catImg: new FormControl('', Validators.required)
 
   });
@@ -188,10 +188,16 @@ export class CatEditDialog {
   editCatSubmit(f) {
     let catID = this.data.sCats[this.data.editIndex]['id'];
     let catType = this.data.sCats[this.data.editIndex]['category'];
-    console.log(this.data.sCats[this.data.editIndex], catID);
     let edit_cf = new FormData();
-    edit_cf.append('title', f['catName']);
-    edit_cf.append('description', f['catDesc']);
+
+    for (let key in f) {
+      if (f[key]) {
+        edit_cf.append(`${key}`, f[key]);
+        console.log(key, f[key]);
+      }
+    }
+    console.log(this.data.sCats[this.data.editIndex], catID);
+
     edit_cf.append('_method', 'put');
     edit_cf.append('category', catType);
     this._catServ.editCategory(catID, edit_cf).subscribe(res => {
@@ -220,8 +226,8 @@ export class CatPEditDialog {
 
 
   editPCat = new FormGroup({
-    catPName: new FormControl(''),
-    catPDesc: new FormControl('')
+    title: new FormControl(''),
+    description: new FormControl('')
     // catImg: new FormControl('', Validators.required)
 
   });
@@ -232,12 +238,21 @@ export class CatPEditDialog {
     let catID = this.data.pCats[this.data.editIndex]['id'];
     let catType = this.data.pCats[this.data.editIndex]['category'];
     console.log(this.data.pCats[this.data.editIndex], catID);
+
     let edit_p_cf = new FormData();
-    edit_p_cf.append('title', f['catPName']);
-    edit_p_cf.append('description', f['catPDesc']);
+
+    for (let key in f) {
+      if (f[key]) {
+        edit_p_cf.append(`${key}`, f[key]);
+        console.log(key, f[key]);
+      }
+    }
+
     edit_p_cf.append('_method', 'put');
     edit_p_cf.append('category', catType);
+
     console.log(catType);
+
     this._catServ.editCategory(catID, edit_p_cf).subscribe(res => {
       console.log(res);
 
