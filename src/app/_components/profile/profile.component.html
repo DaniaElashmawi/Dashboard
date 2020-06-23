@@ -4,10 +4,15 @@
 
     <div class="row p-5">
 
-      <div class=" col-md-12 text-center mb-3">
+      <div class=" col-md-12  mb-3">
         <div class="row">
-          <div class="col-md-4 profile-img mb-4">
-            <img class="w-50" src="../../../assets/avatar.png">
+          <div class="col-md-4 text-center profile-img mb-4">
+            <input type="file" accept="image/*" id="userImg" (change)="readFile($event.target.files)">
+
+            <label class="position-relative" for="userImg"><img class="w-50 " src="../../../assets/avatar.png">
+              <span class="position-absolute">Upload a picture</span>
+            </label>
+
           </div>
         </div>
       </div>
@@ -74,7 +79,7 @@
     </div>
 
     <div class="col-12 text-center form-setting  mt-5">
-      <button (click)="profileEdit()" class="btn mx-2">Edit your profile</button>
+      <button (click)="profileHiddin=!profileHiddin" class="btn mx-2">Edit your profile</button>
       <button (click)="deleteProfile()" class="btn mx-2  ">Delete your profile</button>
 
     </div>
@@ -103,7 +108,7 @@
             <div class="row">
               <div class="form-group mx-auto col-6 ">
                 <label class="w-100" for="company_name">Company Name: </label>
-                <input type="text" class="w-100" formControlName="company_name" required>
+                <input type="text" class="w-100" formControlName="company_name">
                 <!-- <div style="color:red" *ngIf=" profileForm.controls.companyName.errors?.required &&
               (profileForm.controls.companyName.dirty || profileForm.controls.companyName.touched)">
               <h6>
@@ -114,7 +119,7 @@
 
               <div class="form-group mx-auto col-6 ">
                 <label class="w-100" for="company_owner">Company Owner: </label>
-                <input type="text" class="w-100" formControlName="company_owner" required>
+                <input type="text" class="w-100" formControlName="company_owner">
                 <!-- <div style="color:red" *ngIf=" profileForm.controls.companyName.errors?.required &&
               (profileForm.controls.companyName.dirty || profileForm.controls.companyName.touched)">
               <h6>
@@ -133,7 +138,7 @@
             <div class="row">
               <div class="form-group  mx-auto col-6">
                 <label class="w-100" for="companyEmail">Email: </label>
-                <input class="w-100" type="email" formControlName="companyEmail" required>
+                <input class="w-100" type="email" formControlName="companyEmail">
                 <!-- <div style="color:red"
                   *ngIf="profileForm.controls.companyEmail.errors?.required && (profileForm.controls.companyEmail.dirty || profileForm.controls.companyEmail.touched)">
                   <h6>
@@ -144,7 +149,7 @@
 
               <div class="form-group  mx-auto col-6">
                 <label class="w-100" for="telephone">telephone: </label>
-                <input class="w-100" type="tel" formControlName="telephone" required>
+                <input class="w-100" type="tel" formControlName="telephone">
                 <!-- <div style="color:red"
                   *ngIf="profileForm.controls.companyTel.errors?.required && (profileForm.controls.companyTel.dirty || profileForm.controls.companyTel.touched)">
                   <h6>
@@ -160,7 +165,7 @@
 
           <div class="form-group  mx-auto col-10">
             <label class="w-100" for="companyAddress">Address: </label>
-            <input class="w-100" type="text" formControlName="companyAddress" required>
+            <input class="w-100" type="text" formControlName="companyAddress">
             <!-- <div style="color:red"
               *ngIf="profileForm.controls.companyAddress.errors?.required && (profileForm.controls.companyAddress.dirty || profileForm.controls.companyAddress.touched)">
               <h6>
@@ -175,7 +180,7 @@
 
               <div class="form-group  mx-auto col-6">
                 <label class="w-100" for="company_type">Company type: </label>
-                <input class="w-100" type="text" formControlName="company_type" required>
+                <input class="w-100" type="text" formControlName="company_type">
                 <!-- <div style="color:red"
                   *ngIf="profileForm.controls.companyType.errors?.required && (profileForm.controls.companyType.dirty || profileForm.controls.companyType.touched)">
                   <h6>
@@ -186,7 +191,7 @@
 
               <div class="form-group  mx-auto col-6">
                 <label class="w-100" for="packageSubs">Package subscription: </label>
-                <input class="w-100" type="text" formControlName="packageSubs" required>
+                <input class="w-100" type="text" formControlName="packageSubs">
                 <!-- <div style="color:red"
                   *ngIf="profileForm.controls.packageSubs.errors?.required && (profileForm.controls.packageSubs.dirty || profileForm.controls.packageSubs.touched)">
                   <h6>
@@ -211,7 +216,7 @@
         <div class="text-center col-12 form-setting my-5">
           <button type="submit" class="btn mx-2">
             SAVE</button>
-          <button type="reset" class="btn mx-2 ">
+          <button type="reset" (click)="profileHiddin=!profileHiddin" class="btn mx-2 ">
             CANCEL</button>
 
         </div>

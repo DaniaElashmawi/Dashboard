@@ -4,15 +4,6 @@ import { AuthService } from '../../_authentication/auth.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-export interface CatEditData {
-  editIndex;
-  sCats;
-}
-
-export interface CatPEditData {
-  editIndex;
-  pCats;
-}
 
 @Component({
   selector: 'app-categories',
@@ -20,13 +11,17 @@ export interface CatPEditData {
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent implements OnInit {
+  sCats;
+  pCats;
+
+  dialogValue: any;
 
   sCategories;
   pCategories;
   editIndex;
   nonewCategory = true;
   newImgLabel = "Upload an image ...";
-  categoriesTypes = ['service', 'project']
+  categoriesTypes = ['service', 'project'];
 
   newCat = new FormGroup({
     newCatName: new FormControl('', Validators.required),
@@ -71,7 +66,25 @@ export class CategoriesComponent implements OnInit {
         editIndex: this.editIndex, sCats: this.sCategories
       }
     });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        console.log('The edit dialog was closed', result);
+        this.dialogValue = result.receivedData;
+        for (let key in this.dialogValue) {
+          if (this.dialogValue[key]) {
+            this.sCategories[i][key] = this.dialogValue[key];
+          }
+        }
+      }
+      else {
+        console.log("no result from edit dialog");
+      }
+
+
+    });
   }
+
+
   openPEditDialog(i): void {
     console.log('The p edit dialog was opened');
     this.editIndex = i;
@@ -84,7 +97,18 @@ export class CategoriesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The p edit dialog was closed');
+      if (result !== undefined) {
+        console.log('The edit dialog was closed', result);
+        this.dialogValue = result.receivedData;
+        for (let key in this.dialogValue) {
+          if (this.dialogValue[key]) {
+            this.pCategories[i][key] = this.dialogValue[key];
+          }
+        }
+      }
+      else {
+        console.log("no result from edit dialog");
+      }
     });
   }
 
@@ -145,11 +169,17 @@ export class CategoriesComponent implements OnInit {
     );
 
     this.newCat.reset();
+    this.newImgLabel = "Upload an image ...";
     this.nonewCategory = !this.nonewCategory;
 
 
   }
+  reset() {
+    this.newCat.reset();
+    this.newImgLabel = "Upload an image ...";
+    this.nonewCategory = !this.nonewCategory;
 
+  }
 
   ngOnInit() {
     this.loadServicesCat();
@@ -173,13 +203,13 @@ export class CategoriesComponent implements OnInit {
 export class CatEditDialog {
 
   constructor(public dialogRef: MatDialogRef<CatEditDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: CatEditData,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private _catServ: CategoriesService) { }
 
 
   editCat = new FormGroup({
     title: new FormControl(''),
-    discription: new FormControl('')
+    description: new FormControl('')
     // catImg: new FormControl('', Validators.required)
 
   });
@@ -204,6 +234,7 @@ export class CatEditDialog {
       console.log(res);
 
     });
+    this.dialogRef.close({ event: 'close', receivedData: f });
     this.editCat.reset();
   }
 
@@ -221,7 +252,7 @@ export class CatEditDialog {
 export class CatPEditDialog {
 
   constructor(public dialogRef: MatDialogRef<CatPEditDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: CatPEditData,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private _catServ: CategoriesService) { }
 
 
@@ -257,6 +288,7 @@ export class CatPEditDialog {
       console.log(res);
 
     });
+    this.dialogRef.close({ event: 'close', receivedData: f });
     this.editPCat.reset();
   }
 

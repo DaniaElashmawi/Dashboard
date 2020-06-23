@@ -74,34 +74,79 @@ mat-icon {
 }
 
 #services .service-setting {
-  right: 6px;
+  right: 0px;
   bottom: 6px;
 
 }
 
-#services .single-service {
-  border: 1px #e3e3e3 solid;
+#services .services-list {
+  padding: 30px;
 }
 
-#services .single-service h5 {
-  font-size: 17px;
+#services .single-service:hover .single-service-layer {
+  transition: .4s all;
+  height: 100%;
+  opacity: 1;
+}
+
+#services .single-service-layer {
+  width: 100%;
+  transition: .4s all;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  top: 0;
+  flex-flow: column;
+  background-color: #00000087;
+  height: 0;
+  opacity: 0;
+}
+
+#services .single-service-layer h5 {
+  font-size: 18px;
   font-weight: 700;
+  margin-bottom: 20px;
+  color: #fff;
+
+}
+
+#services .single-service-img {
+  height: 200px;
+}
+
+#services .single-service-img img {
+  height: 100%;
 }
 
 #services .service-setting mat-icon {
-  margin: 0 10px;
+  margin: 0 5px;
 }
 
+
+
+#display-dialog .img-box {
+  height: 350px;
+}
+
+#display-dialog .img-box img {
+  height: 100%;
+}
+
+#display-dialog .close-btn button {
+  border-radius: 6px;
+  background-color: #F60000;
+  color: #fff;
+}
+
+#display-dialog .close-btn {
+  bottom: 0;
+  right: 0;
+}
 
 .mat-dialog-actions {
   float: right;
 }
 
-.close-btn {
-  border-radius: 6px;
-  background-color: #F60000;
-  color: #fff;
-}
 
 #editServcieForm span {
   font-size: 12px;
@@ -119,7 +164,7 @@ mat-icon {
 }
 
 .show {
-  display: block;
+  display: flex;
 }
 
 #newServices .newServices-title {
@@ -309,4 +354,23 @@ mat-icon {
   padding: 6px;
   font-size: 15px;
   background-color: #f2f2f2eb;
+}
+
+#editServcieForm input[type=file] {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+#editServcieForm .service-img {
+  font-size: 14px;
+  background-color: #646464;
+  border-radius: 4px;
+  padding: 5px 0;
+  padding-left: 6px;
+  color: #fff;
+  cursor: pointer;
 }

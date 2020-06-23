@@ -32,31 +32,40 @@
 
     </div>
 
-    <div (click)="nonewCategory=!nonewCategory" class="cat-btn secondary-color d-flex align-items-center">
+    <div (click)="nonewCategory=!nonewCategory ;  serv=false" class="cat-btn secondary-color d-flex align-items-center">
       <mat-icon>add</mat-icon>Add New Category
     </div>
 
-    <div (click)="nonewService=!nonewService" class="serv-btn secondary-color d-flex align-items-center">
+    <div (click)="nonewService=!nonewService ; serv=false" class="serv-btn secondary-color d-flex align-items-center">
       <mat-icon>add</mat-icon>Add New Service
     </div>
 
-
     <div [ngClass]=" serv? 'show' : 'hide' " class="row p-5 ">
 
+      <div class=" col-md-4 services-list " *ngFor="let serv of servicesDetails ; index as i">
+        <div class="single-service position-relative">
+          <div class="single-service-img">
+            <img src={{serv.photo_url}} class="w-100">
+          </div>
+          <div class="single-service-layer position-absolute ">
+            <h5><span>{{i + 1}}. </span>{{serv.title}}</h5>
 
-      <div class="single-service col-12 p-3 my-3 " *ngFor="let serv of servicesDetails ; index as i">
-        <h5><span>{{i + 1}}. </span>{{serv.title}}</h5>
 
-        <div class="position-absolute service-setting">
+            <div class="service-setting">
 
-          <mat-icon (click)="openDialog(i)">visibility</mat-icon>
-          <mat-icon (click)="openEditDialog(i)" class="edit-color">edit</mat-icon>
-          <mat-icon (click)="deleteSingleService(i)" class="secondary-color">clear</mat-icon>
+              <mat-icon (click)="openDialog(i)">visibility</mat-icon>
+              <mat-icon (click)="openEditDialog(i)" class="edit-color">edit</mat-icon>
+              <mat-icon (click)="deleteSingleService(i)" class="secondary-color">clear</mat-icon>
+            </div>
+          </div>
         </div>
+
       </div>
+
 
     </div>
   </div>
+
 </section>
 
 <ng-container *ngIf="!nonewService">
@@ -93,6 +102,7 @@
                   <div class="form-group mx-auto col-6">
                     <label class="w-100" for="newServiceCat">Service Category: </label>
                     <select formControlName="newServiceCat" id="newServiceCat" required class="w-100">
+                      <option>Please choose a category</option>
                       <option *ngFor="let cat of mainCategories">{{cat}}</option>
                     </select>
                     <div style="color:red" *ngIf=" newService.controls.newServiceCat.errors?.required &&
@@ -141,7 +151,7 @@
               <div class="col-12  text-center">
                 <button type="submit" [disabled]="!newService.valid" class="btn mx-3">
                   SAVE</button>
-                <button class="btn mx-3" (click)="nonewService=!nonewService">
+                <button class="btn mx-3" type="reset" (click)="reset();nonewService=!nonewService">
                   CANCEL</button>
               </div>
             </div>
@@ -221,7 +231,7 @@
               <div class="col-12  text-center">
                 <button type="submit" [disabled]="!newCat.valid" class="btn mx-3">
                   SAVE</button>
-                <button class="btn mx-3" (click)="nonewCategory=!nonewCategory">
+                <button class="btn mx-3" type="reset" (click)="reset();nonewCategory=!nonewCategory">
                   CANCEL</button>
               </div>
             </div>

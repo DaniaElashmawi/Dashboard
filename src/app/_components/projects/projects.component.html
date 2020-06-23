@@ -36,28 +36,36 @@
 
     </div>
 
-    <div (click)="nonewCategory=!nonewCategory" class="cat-btn secondary-color d-flex align-items-center">
+    <div (click)="nonewCategory=!nonewCategory ; proj=false" class="cat-btn secondary-color d-flex align-items-center">
       <mat-icon>add</mat-icon>Add New Category
     </div>
 
-    <div (click)="nonewProject=!nonewProject" class="proj-btn secondary-color d-flex align-items-center">
+    <div (click)="nonewProject=!nonewProject ; proj=false" class="proj-btn secondary-color d-flex align-items-center">
       <mat-icon>add</mat-icon>Add New Project
     </div>
 
     <div [ngClass]=" proj? 'show' : 'hide' " class="row p-5">
 
+      <div class=" col-md-4 projects-list " *ngFor="let proj of projectsDetails ; index as i">
+        <div class="single-project position-relative">
+          <div class="single-project-img">
+            <img src={{proj.photo_url}} class="w-100">
+          </div>
+          <div class="single-project-layer position-absolute ">
+            <h5><span>{{i + 1}}. </span>{{proj.title}}</h5>
 
-      <div class="single-project col-12 p-3 my-3 " *ngFor="let proj of projectsDetails ; index as i">
-        <h5><span>{{i + 1}}. </span>{{proj.title}}</h5>
-        <!-- <p> {{proj.description}} </p> -->
 
-        <div class="position-absolute project-setting">
+            <div class="project-setting">
 
-          <mat-icon (click)="openDialog(i)">visibility</mat-icon>
-          <mat-icon (click)="openEditDialog(i)" class="edit-color">edit</mat-icon>
-          <mat-icon (click)="deleteSingleProject(i)" class="secondary-color">clear</mat-icon>
+              <mat-icon (click)="openDialog(i) ">visibility</mat-icon>
+              <mat-icon (click)="openEditDialog(i)" class="edit-color">edit</mat-icon>
+              <mat-icon (click)="deleteSingleProject(i)" class="secondary-color">clear</mat-icon>
+            </div>
+          </div>
         </div>
+
       </div>
+
 
     </div>
   </div>
@@ -99,7 +107,7 @@
                   <div class="form-group mx-auto col-6">
                     <label class="w-100" for="newProjectCat">Project Category: </label>
                     <select formControlName="newProjectCat" id="newProjectCat" required class="w-100">
-                      <option disabled>Choose the category</option>
+                      <option>Please choose a category</option>
                       <option *ngFor="let cat of pMainCategories">{{cat}}</option>
                     </select>
                     <div style="color:red" *ngIf=" newProject.controls.newProjectCat.errors?.required &&
@@ -148,7 +156,7 @@
               <div class="col-12  text-center">
                 <button type="submit" [disabled]="!newProject.valid" class="btn mx-3">
                   SAVE</button>
-                <button class="btn mx-3" (click)="nonewProject=!nonewProject">
+                <button class="btn mx-3" type="reset" (click)="reset();nonewProject = !nonewProject; ">
                   CANCEL</button>
               </div>
             </div>
@@ -228,7 +236,7 @@
               <div class="col-12  text-center">
                 <button type="submit" [disabled]="!newCat.valid" class="btn mx-3">
                   SAVE</button>
-                <button class="btn mx-3" (click)="nonewCategory=!nonewCategory">
+                <button class="btn mx-3" type="reset" (click)="reset();nonewCategory = !nonewCategory; ">
                   CANCEL</button>
               </div>
             </div>

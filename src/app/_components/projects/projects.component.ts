@@ -31,12 +31,12 @@ export class ProjectsComponent implements OnInit {
     newCatImg: new FormControl('', Validators.required)
 
   });
-  editDialogValue;
+
   dialogValue;
 
   projects;
   proj: boolean = false;
-  projectsDetails;
+  projectsDetails = [];
   index: number;
   editindex: number;
   currentProject;
@@ -54,7 +54,7 @@ export class ProjectsComponent implements OnInit {
     this.index = i;
     this.currentProject = this.projectsDetails[i];
     const dialogRef = this.dialog.open(displayDialog, {
-      width: '600px',
+      width: '850px',
       data: {
         index: this.index, currentProject: this.currentProject
       }
@@ -72,10 +72,9 @@ export class ProjectsComponent implements OnInit {
     this.currentProject = this.projectsDetails[i];
 
     const dialogRef = this.dialog.open(editDialog, {
-      width: '800px',
+      width: '850px',
       data: {
         editindex: this.editindex, projectsDetails: this.projectsDetails,
-        EditDialogValue: this.editDialogValue
       }
     });
 
@@ -117,7 +116,12 @@ export class ProjectsComponent implements OnInit {
     // console.log(projectCatId);
     return this._projectsService.getAllProjects(projectCatId).subscribe(proj => {
       this.projectsDetails = proj;
-      // console.log(this.projectsDetails);
+
+      this.projectsDetails.forEach((project, i) => {
+        this.projectsDetails[i]['photo_url'] = 'http://127.0.0.1:8000' + project['photo_url'];
+        console.log(this.projectsDetails[i]['photo_url']);
+      });
+      console.log(this.projectsDetails);
       this.proj = true;
     });
 
@@ -183,16 +187,26 @@ export class ProjectsComponent implements OnInit {
     // console.log(new_simg)
     this._projectsService.addNewProject(new_pfd).subscribe(res => {
       console.log(res);
+      res['photo_url'] = 'http://127.0.0.1:8000' + res['photo_url'];
       this.projectsDetails.push(res);
     },
       err => {
         console.log(err);
       });
+    this.newImgLabel = "Upload an image ...";
     this.newProject.reset();
     this.nonewProject = !this.nonewProject;
 
+
   }
 
+
+  reset() {
+    this.newProject.reset();
+    this.newCat.reset();
+    this.newImgLabel = "Upload an image ...";
+
+  }
 
 
   submitNewCat(f) {
@@ -218,6 +232,7 @@ export class ProjectsComponent implements OnInit {
     );
 
     this.newCat.reset();
+    this.newImgLabel = "Upload an image ...";
     this.nonewCategory = !this.nonewCategory;
 
   }

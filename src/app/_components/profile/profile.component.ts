@@ -34,9 +34,19 @@ export class ProfileComponent implements OnInit {
   }
 
 
-  profileEdit() {
-    // console.log("hello from edit");
-    this.profileHiddin = true;
+  newImgLabel = 'Upload an image ...';
+
+  imgFile = null;
+  readFile(file) {
+    this.imgFile = file[0];
+    if (this.imgFile) {
+      this.newImgLabel = this.imgFile.name;
+    }
+    else {
+      this.newImgLabel = "Upload an image ...";
+    }
+    console.log(this.imgFile);
+
   }
 
   onSubmit(f) {

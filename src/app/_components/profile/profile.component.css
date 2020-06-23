@@ -28,6 +28,34 @@
 
 
 
+#profile .profile-img label {
+  cursor: pointer;
+  background-image: url(../../../assets/avatar.png);
+  /* display: none; */
+}
+
+#profile .profile-img span {
+  right: 50%;
+  transform: translateX(50%);
+  font-weight: 900;
+  font-size: 14px;
+  bottom: -30px;
+  display: none;
+}
+
+#profile .profile-img input[type=file] {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+#profile .profile-img:hover span {
+  display: block;
+}
+
 .form-setting button:nth-of-type(1) {
   background-color: #F60000;
   color: #fff;
@@ -68,7 +96,7 @@ form .form-group {
   margin-bottom: 30px;
 }
 
-input {
+#profileEdit input {
   padding: 15px;
   border-radius: 5px;
   border: 1px solid #f2f2f2eb;

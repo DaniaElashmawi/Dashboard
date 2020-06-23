@@ -31,13 +31,13 @@ export class ProjectsService {
 
   deleteProject(index): Observable<any> {
     // console.log(this.authSer.currentUserValue['data']['api_token']);
-
-    return this._HttpClient.delete(`${environment.apiUrl}/api/projects/${this.authSer.currentUserValue['data']['id']}/${index}`, {
+ return this._HttpClient.delete(`${environment.apiUrl}/api/projects/${this.authSer.currentUserValue['data']['id']}/${index}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${this.authSer.currentUserValue['data']['api_token']}`,
       })
     });
+   
 
   }
 

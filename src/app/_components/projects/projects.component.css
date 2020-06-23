@@ -80,29 +80,53 @@ mat-icon {
 
 }
 
-#projects .single-project {
-  border: 1px #e3e3e3 solid;
+#projects .projects-list {
+  padding: 30px;
 }
 
-#projects .single-project h5 {
-  font-size: 17px;
+#projects .single-project:hover .single-project-layer {
+  transition: .4s all;
+  height: 100%;
+  opacity: 1;
+}
+
+#projects .single-project-layer {
+  width: 100%;
+  transition: .4s all;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  top: 0;
+  flex-flow: column;
+  background-color: #00000087;
+  height: 0;
+  opacity: 0;
+}
+
+#projects .single-project-layer h5 {
+  font-size: 18px;
   font-weight: 700;
+  margin-bottom: 20px;
+  color: #fff;
+
+}
+
+#projects .single-project-img {
+  height: 200px;
+}
+
+#projects .single-project-img img {
+  height: 100%;
 }
 
 #projects .project-setting mat-icon {
-  margin: 0 10px;
+  margin: 0 5px;
 }
-
 
 .mat-dialog-actions {
   float: right;
 }
 
-.close-btn {
-  border-radius: 6px;
-  background-color: #F60000;
-  color: #fff;
-}
 
 #editForm span {
   font-size: 12px;
@@ -113,14 +137,32 @@ mat-icon {
   font-weight: 700;
 }
 
-.projects-list {}
 
 .hide {
   display: none;
 }
 
 .show {
-  display: block;
+  display: flex;
+}
+
+#display-dialog .img-box {
+  height: 350px;
+}
+
+#display-dialog .img-box img {
+  height: 100%;
+}
+
+#display-dialog .close-btn button {
+  border-radius: 6px;
+  background-color: #F60000;
+  color: #fff;
+}
+
+#display-dialog .close-btn {
+  bottom: 0;
+  right: 0;
 }
 
 #newProjects .newProjects-title {

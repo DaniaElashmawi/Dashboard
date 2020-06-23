@@ -32,11 +32,10 @@ export class ServicesComponent implements OnInit {
   });
 
   dialogValue: any;
-  EditDialogValue: any;
 
   services;
   serv: boolean = false;
-  servicesDetails;
+  servicesDetails = [];
   index: number;
   editindex: number;
   currentService;
@@ -54,7 +53,7 @@ export class ServicesComponent implements OnInit {
     this.index = i;
     this.currentService = this.servicesDetails[i];
     const dialogRef = this.dialog.open(servicedisplayDialog, {
-      width: '600px',
+      width: '850px',
       data: {
         index: this.index, currentService: this.currentService
       }
@@ -74,9 +73,7 @@ export class ServicesComponent implements OnInit {
     const dialogRef = this.dialog.open(serviceeditDialog, {
       width: '800px',
       data: {
-        editindex: this.editindex, servicesDetails: this.servicesDetails, services: this.services,
-        EditDialogValue: this.EditDialogValue
-
+        editindex: this.editindex, servicesDetails: this.servicesDetails, services: this.services
       }
     });
 
@@ -91,7 +88,9 @@ export class ServicesComponent implements OnInit {
           if (this.dialogValue[key]) {
             this.servicesDetails[i][key] = this.dialogValue[key];
           }
+
         }
+
       }
       else {
         console.log("no result from edit dialog");
@@ -117,10 +116,18 @@ export class ServicesComponent implements OnInit {
   loadservices(i) {
     let serviceCatId = this.services[i]['id'];
     console.log(serviceCatId);
-    return this._SerService.getAllServices(serviceCatId).subscribe(serv => {
-      this.servicesDetails = serv;
-      console.log(this.servicesDetails);
+    return this._SerService.getAllServices(serviceCatId).subscribe(servs => {
+      this.servicesDetails = servs;
+      // console.log(this.servicesDetails);
+
+      this.servicesDetails.forEach((service, i) => {
+        this.servicesDetails[i]['photo_url'] = 'http://127.0.0.1:8000' + service['photo_url'];
+        console.log(this.servicesDetails[i]['photo_url']);
+      });
+
+      // this.serviceImg = servs['photo_url'];
       this.serv = true;
+
     });
 
 
@@ -161,7 +168,6 @@ export class ServicesComponent implements OnInit {
       this.newImgLabel = "Upload an image ...";
     }
     console.log(this.imgFile);
-
   }
 
   submitNewService(f) {
@@ -176,9 +182,7 @@ export class ServicesComponent implements OnInit {
       if (x['title'] == new_scat) {
         cat_id = x['id']
       }
-
     }
-
 
     let new_sfd = new FormData;
     new_sfd.append('title', new_sname);
@@ -189,17 +193,25 @@ export class ServicesComponent implements OnInit {
     // console.log(new_simg)
     this._SerService.addNewService(new_sfd).subscribe(res => {
       console.log(res);
+      res['photo_url'] = 'http://127.0.0.1:8000' + res['photo_url'];
       this.servicesDetails.push(res);
+      console.log(this.servicesDetails);
     },
       err => {
         console.log(err);
       });
+    this.newImgLabel = "Upload an image ...";
     this.newService.reset();
     this.nonewService = !this.nonewService;
 
   }
 
+  reset() {
+    this.newService.reset();
+    this.newCat.reset();
+    this.newImgLabel = "Upload an image ...";
 
+  }
 
 
   submitNewCat(f) {
@@ -218,12 +230,13 @@ export class ServicesComponent implements OnInit {
 
     this._catServ.addNewCategory(new_cfd).subscribe(res => {
       console.log(res);
+      res['photo_url'] = 'http://127.0.0.1:8000' + res['photo_url'];
       this.services.push(res);
     }
       ,
       err => console.log(err)
     );
-
+    this.newImgLabel = "Upload an image ...";
     this.newCat.reset();
     this.nonewCategory = !this.nonewCategory;
 
@@ -271,6 +284,7 @@ export class serviceeditDialog {
   editServcieForm = new FormGroup({
     title: new FormControl(''),
     description: new FormControl(''),
+    photo_url: new FormControl(''),
 
   });
 
@@ -279,26 +293,59 @@ export class serviceeditDialog {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _SerService: ServicesService) { }
 
+  imgLabel = "Upload an image ...";
+  // url;
+  imgFile = null;
 
+  readFile(file) {
+    this.imgFile = file[0];
+    if (this.imgFile) {
+      this.imgLabel = this.imgFile.name;
+    }
+    else {
+      this.imgLabel = "Upload an image ...";
+    }
+    console.log(this.imgFile);
+  }
+
+
+  // readUrl(event: any) {
+  //   if (event.target.files && event.target.files[0]) {
+  //     var reader = new FileReader();
+  //     reader.readAsDataURL(event.target.files[0]);
+
+  //     reader.onload = (e: any) => {
+  //       this.url = (<FileReader>e.target).result;
+  //       console.log(this.url, reader);
+
+  //     }
+
+  //   }
+  // }
 
   editservice(f) {
     console.log(f);
     const s_fd = new FormData();
 
-    for (let key in f) {
+    for (const key in f) {
       if (f[key]) {
         s_fd.append(`${key}`, f[key]);
         console.log(key, f[key]);
       }
-    }
+      if (key === 'photo_url' && f[key]) {
+        s_fd.append(`${key}`, this.imgFile);
+        // console.log(key, this.url);
 
+      }
+    }
+    s_fd.append("photo_url", this.imgFile);
     s_fd.append('_method', 'put');
 
     let id = this.data.servicesDetails[this.data.editindex]['id'];
     // console.log(this.data.projectsDetails[this.data.editindex], id);
 
     this._SerService.editService(id, s_fd).subscribe(res => {
-      // console.log(res);
+      console.log(res);
 
     },
       err => {
