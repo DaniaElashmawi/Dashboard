@@ -97,8 +97,9 @@ mat-icon {
   justify-content: center;
   display: flex;
   top: 0;
+  border-radius: 15px;
   flex-flow: column;
-  background-color: #00000087;
+  background-color: #000;
   height: 0;
   opacity: 0;
 }
@@ -107,16 +108,18 @@ mat-icon {
   font-size: 18px;
   font-weight: 700;
   margin-bottom: 20px;
-  color: #fff;
-
 }
 
 #projects .single-project-img {
   height: 200px;
+  border-radius: 15px;
+
 }
 
 #projects .single-project-img img {
   height: 100%;
+  border-radius: 15px;
+
 }
 
 #projects .project-setting mat-icon {
@@ -351,4 +354,23 @@ mat-icon {
   padding: 6px;
   font-size: 15px;
   background-color: #f2f2f2eb;
+}
+
+#editForm input[type=file] {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+#editForm .project-img {
+  font-size: 14px;
+  background-color: #646464;
+  border-radius: 4px;
+  padding: 5px 0;
+  padding-left: 6px;
+  color: #fff;
+  cursor: pointer;
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<section id="proj-cat-display-dialog" class="container">
+  <div class="row position-relative">
+
+    <div class="col-4">
+      <div class="img-box">
+        <img class="w-100" src={{data.currentProjCat?.photo_url}}>
+      </div>
+    </div>
+
+    <div class="col-8">
+      <h6 mat-dialog-title><strong>Project Category Name:</strong> {{data.currentProjCat?.title}}</h6>
+      <div mat-dialog-content>
+        <p><strong>Project Category Description:</strong> {{data.currentProjCat?.description}} </p>
+
+      </div>
+
+
+    </div>
+
+    <div class="text-right close-btn position-absolute">
+      <button class="btn" [mat-dialog-close]>
+        Close </button>
+    </div>
+  </div>

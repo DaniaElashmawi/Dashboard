@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<section id="serv-cat-display-dialog" class="container">
+  <div class="row position-relative">
+
+    <div class="col-4">
+      <div class="img-box">
+        <img class="w-100" src={{data.currentServCat?.photo_url}}>
+      </div>
+    </div>
+
+    <div class="col-8">
+      <h6 mat-dialog-title><strong>Service Category Name:</strong> {{data.currentServCat?.title}}</h6>
+      <div mat-dialog-content>
+        <p><strong>Service Category Description:</strong> {{data.currentServCat?.description}} </p>
+
+      </div>
+
+
+    </div>
+
+    <div class="text-right close-btn position-absolute">
+      <button class="btn" [mat-dialog-close]>
+        Close </button>
+    </div>
+  </div>

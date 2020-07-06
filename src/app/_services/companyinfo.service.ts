@@ -18,8 +18,9 @@ export class CompanyinfoService {
 
   ///////////////////////////////////////////////////////////////////////////////////////////////
 
+
   editProfile(profile_fd, id): Observable<any> {
-    return this._httpClient.post(`${environment.apiUrl}/api/company_infs/${this._authSer.currentUserValue['data']['id']}/${id} `,
+    return this._httpClient.post(`${environment.apiUrl}/api/update_company_info/${this._authSer.currentUserValue['data']['id']}/${id} `,
       profile_fd, {
       headers: new HttpHeaders({
         'Accept': 'application/json',
@@ -31,15 +32,33 @@ export class CompanyinfoService {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  deleteProfile(id): Observable<any> {
-    return this._httpClient.delete(`${environment.apiUrl}/api/company_infs/${this._authSer.currentUserValue['data']['id']}/${id}`, {
+  deleteProfile(body, id): Observable<any> {
+    let options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this._authSer.currentUserValue['data']['api_token']}`
+      }), body
+    };
+    return this._httpClient.delete(`${environment.apiUrl}/api/company_infs/
+    ${this._authSer.currentUserValue['data']['id']}/${id}`, options
+    );
+
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+  addProfile(f): Observable<any> {
+    return this._httpClient.post(`${environment.apiUrl}/api/company_infs/${this._authSer.currentUserValue['data']['id']} `,
+      f, {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
         'Authorization': `Bearer ${this._authSer.currentUserValue['data']['api_token']}`,
       })
+
     });
 
   }
+
+
 
 
 }

@@ -95,9 +95,10 @@ mat-icon {
   align-items: center;
   justify-content: center;
   display: flex;
+  border-radius: 15px;
   top: 0;
   flex-flow: column;
-  background-color: #00000087;
+  background-color: #000000;
   height: 0;
   opacity: 0;
 }
@@ -106,16 +107,19 @@ mat-icon {
   font-size: 18px;
   font-weight: 700;
   margin-bottom: 20px;
-  color: #fff;
 
 }
 
 #services .single-service-img {
   height: 200px;
+  border-radius: 15px;
+
 }
 
 #services .single-service-img img {
   height: 100%;
+  border-radius: 15px;
+
 }
 
 #services .service-setting mat-icon {

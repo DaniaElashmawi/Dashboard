@@ -4,7 +4,7 @@
   </div>
   <div class="card mx-auto">
     <div class="card-body">
-      <form class="w-75 mx-auto py-3 " [formGroup]="loginForm">
+      <form class="w-75 mx-auto py-3 " [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm.value)">
         <input class="w-100" type="email" formControlName="userName" placeholder="Please,enter the Email" required>
 
         <div class="error text-center" *ngIf="loginForm.controls['userName'].hasError('required')
@@ -19,16 +19,23 @@
             password!</span>
         </div>
 
+        <div class="remember-user">
+          <label class="container">Remember me?
+            <input (change)="rememberMe($event)" type="checkbox" formControlName="rememberUser">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+
         <div class="text-right pt-5">
-          <button class="btn btn-login" (click)="onLogin(loginForm)" type="button"
-            [disabled]="!loginForm.valid">Login</button>
+          <button class="btn btn-login" type="submit" [disabled]="!loginForm.valid">Login</button>
 
           <button class="btn btn-secondary m-2" type="reset">Cancel</button>
         </div>
       </form>
+
       <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}
         <p>
-          An error occured,please make sure of your credentials and try again.
+          "An error occured,please make sure of your credentials and try again."
         </p>
       </div>
       <!-- <h5 class="card-title"></h5>

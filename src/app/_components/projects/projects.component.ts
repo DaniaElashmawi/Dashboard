@@ -32,7 +32,6 @@ export class ProjectsComponent implements OnInit {
 
   });
 
-  dialogValue;
 
   projects;
   proj: boolean = false;
@@ -54,7 +53,7 @@ export class ProjectsComponent implements OnInit {
     this.index = i;
     this.currentProject = this.projectsDetails[i];
     const dialogRef = this.dialog.open(displayDialog, {
-      width: '850px',
+      width: '880px',
       data: {
         index: this.index, currentProject: this.currentProject
       }
@@ -83,18 +82,19 @@ export class ProjectsComponent implements OnInit {
 
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
-        console.log('The edit dialog was closed', result);
-        this.dialogValue = result.receivedData;
-        for (let key in this.dialogValue) {
-          if (this.dialogValue[key]) {
-            this.projectsDetails[i][key] = this.dialogValue[key];
-          }
-        }
-      }
-      else {
-        console.log("no result from edit dialog");
-      }
+      console.log('The edit dialog was closed', result);
+      // if (result !== undefined) {
+      //
+      //   this.dialogValue = result.receivedData;
+      //   for (let key in this.dialogValue) {
+      //     if (this.dialogValue[key]) {
+      //       this.projectsDetails[i][key] = this.dialogValue[key];
+      //     }
+      //   }
+      // }
+      // else {
+      //   console.log("no result from edit dialog");
+      // }
     });
   }
 
@@ -280,6 +280,7 @@ export class editDialog {
   editForm = new FormGroup({
     title: new FormControl(''),
     description: new FormControl(''),
+    photo_url: new FormControl(''),
 
   });
 
@@ -290,6 +291,21 @@ export class editDialog {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _projectsService: ProjectsService) { }
 
+  imgLabel = 'Upload an image ...';
+  // url;
+  // imgURL = '';
+  imgFile = null;
+
+  readFile(file) {
+    this.imgFile = file[0];
+    if (this.imgFile) {
+      this.imgLabel = this.imgFile.name;
+    }
+    else {
+      this.imgLabel = 'Upload an image ...';
+    }
+    console.log(this.imgFile);
+  }
 
 
   editProject(f) {
@@ -304,6 +320,17 @@ export class editDialog {
       }
     }
 
+    for (const key in f) {
+      if (f[key] && key !== 'photo_url') {
+        fd.append(`${key}`, f[key]);
+        console.log(key, f[key]);
+      } else if (key === 'photo_url' && f[key]) {
+        console.log('this is the imgfile', this.imgFile);
+        fd.append(`photo`, this.imgFile);
+        // console.log(key, this.url);
+
+      }
+    }
 
     fd.append('_method', 'put');
 
@@ -312,13 +339,17 @@ export class editDialog {
 
     this._projectsService.editProject(id, fd).subscribe(res => {
       console.log(res);
+      this.data.projectsDetails[this.data.editindex] = res;
+      if (res['photo_url']) {
+        this.data.projectsDetails[this.data.editindex]['photo_url'] = 'http://127.0.0.1:8000' + res['photo_url']
+      }
     },
       err => {
         console.log(err);
       }
 
     );
-    this.dialogRef.close({ event: 'close', receivedData: f });
+    // this.dialogRef.close({ event: 'close', receivedData: f });
 
   }
 

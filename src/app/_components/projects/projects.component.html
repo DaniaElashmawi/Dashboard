@@ -52,12 +52,15 @@
             <img src={{proj.photo_url}} class="w-100">
           </div>
           <div class="single-project-layer position-absolute ">
-            <h5><span>{{i + 1}}. </span>{{proj.title}}</h5>
+            <h5 class="prim-color">
+              <!-- <span>{{i + 1}}. </span> -->
+              {{proj.title}}
+            </h5>
 
 
             <div class="project-setting">
 
-              <mat-icon (click)="openDialog(i) ">visibility</mat-icon>
+              <mat-icon (click)="openDialog(i) " class="prim-color">visibility</mat-icon>
               <mat-icon (click)="openEditDialog(i)" class="edit-color">edit</mat-icon>
               <mat-icon (click)="deleteSingleProject(i)" class="secondary-color">clear</mat-icon>
             </div>

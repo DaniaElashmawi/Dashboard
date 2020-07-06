@@ -13,7 +13,7 @@ import { SidebarComponent } from './_shared/sidebar/sidebar.component';
 import { LoginComponent } from './_components/login/login.component';
 import { ProjectsComponent, displayDialog, editDialog } from './_components/projects/projects.component';
 import { ServicesComponent, servicedisplayDialog, serviceeditDialog } from './_components/services/services.component';
-import { CategoriesComponent, CatEditDialog, CatPEditDialog } from './_components/categories/categories.component';
+import { CategoriesComponent, CatEditDialog, CatPEditDialog, CatPDisplayDialog, CatDisplayDialog } from './_components/categories/categories.component';
 
 
 // Modules
@@ -43,7 +43,9 @@ import { HttpClientModule } from '@angular/common/http';
     serviceeditDialog,
     CategoriesComponent,
     CatEditDialog,
-    CatPEditDialog
+    CatPEditDialog,
+    CatPDisplayDialog,
+    CatDisplayDialog,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +60,7 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: [displayDialog, editDialog, serviceeditDialog,
-    servicedisplayDialog, CatEditDialog, CatPEditDialog]
+    servicedisplayDialog, CatEditDialog, CatPEditDialog, CatPDisplayDialog, CatDisplayDialog]
 
 })
 export class AppModule { }

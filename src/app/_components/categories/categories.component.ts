@@ -11,11 +11,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent implements OnInit {
-  sCats;
-  pCats;
 
-  dialogValue: any;
-
+  index;
+  currentServCat;
+  currentProjCat;
   sCategories;
   pCategories;
   editIndex;
@@ -33,53 +32,82 @@ export class CategoriesComponent implements OnInit {
 
 
 
+  openServiceDisplayDialog(i): void {
+    console.log('The display dialog was opened');
+    this.index = i;
+    this.currentServCat = this.sCategories[i];
+    console.log(this.currentServCat);
+    const dialogRef = this.dialog.open(CatDisplayDialog, {
+      width: '880px',
+      data: {
+        index: this.index, currentServCat: this.currentServCat
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openProjectDisplayDialog(i): void {
+    console.log('The P display dialog was opened');
+    this.index = i;
+    this.currentProjCat = this.pCategories[i];
+    console.log(this.currentProjCat);
+    const dialogRef = this.dialog.open(CatPDisplayDialog, {
+      width: '850px',
+      data: {
+        index: this.index, currentProjCat: this.currentProjCat
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The P dialog was closed');
+    });
+  }
+
   constructor(private _catSer: CategoriesService,
     public dialog: MatDialog,
-    private _authSer: AuthService) { }
+    private _authSer: AuthService) { console.log('hi from prijects') }
 
   loadServicesCat() {
     this._catSer.getServicesCat().subscribe(cats => {
       console.log(cats);
       this.sCategories = cats;
+      this.sCategories.forEach((cat, i) => {
+        this.sCategories[i]['photo_url'] = 'http://127.0.0.1:8000' + cat['photo_url'];
+        console.log(this.sCategories[i]['photo_url']);
+      });
     });
   }
+
   loadProjectsCat() {
     this._catSer.getProjectsCat().subscribe(cats => {
       console.log(cats);
       this.pCategories = cats;
+      this.pCategories.forEach((cat, i) => {
+        this.pCategories[i]['photo_url'] = 'http://127.0.0.1:8000' + cat['photo_url'];
+        console.log(this.pCategories[i]['photo_url']);
+      });
     });
   }
 
-
-  open(scat) {
-    scat.active = !scat.active;
-  }
 
 
   openEditDialog(i): void {
     console.log('The edit dialog was opened');
     this.editIndex = i;
+    this.currentServCat = this.sCategories[i];
+
     // console.log(this.editIndex)
     const dialogRef = this.dialog.open(CatEditDialog, {
-      width: '600px',
+      width: '800px',
       data: {
-        editIndex: this.editIndex, sCats: this.sCategories
+        editIndex: this.editIndex, sCategories: this.sCategories
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
-        console.log('The edit dialog was closed', result);
-        this.dialogValue = result.receivedData;
-        for (let key in this.dialogValue) {
-          if (this.dialogValue[key]) {
-            this.sCategories[i][key] = this.dialogValue[key];
-          }
-        }
-      }
-      else {
-        console.log("no result from edit dialog");
-      }
-
+      console.log('The edit dialog was closed', result);
 
     });
   }
@@ -88,30 +116,20 @@ export class CategoriesComponent implements OnInit {
   openPEditDialog(i): void {
     console.log('The p edit dialog was opened');
     this.editIndex = i;
+    this.currentProjCat = this.pCategories[i];
     // console.log(this.editIndex)
     const dialogRef = this.dialog.open(CatPEditDialog, {
-      width: '600px',
+      width: '800px',
       data: {
-        editIndex: this.editIndex, pCats: this.pCategories
+        editIndex: this.editIndex, pCategories: this.pCategories
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
-        console.log('The edit dialog was closed', result);
-        this.dialogValue = result.receivedData;
-        for (let key in this.dialogValue) {
-          if (this.dialogValue[key]) {
-            this.pCategories[i][key] = this.dialogValue[key];
-          }
-        }
-      }
-      else {
-        console.log("no result from edit dialog");
-      }
+      console.log('The p edit dialog was closed', result);
+
     });
   }
-
 
 
   deleteCat(index) {
@@ -134,8 +152,7 @@ export class CategoriesComponent implements OnInit {
     this.imgFile = file[0];
     if (this.imgFile) {
       this.newImgLabel = this.imgFile.name;
-    }
-    else {
+    } else {
       this.newImgLabel = "Upload an image ...";
     }
     console.log(this.imgFile);
@@ -144,7 +161,7 @@ export class CategoriesComponent implements OnInit {
   submitNewCat(f) {
     let new_cname = f['newCatName'];
     let new_cdesc = f['newCatDesc'];
-    let new_ctype = f['newCatType']
+    let new_ctype = f['newCatType'];
 
     let new_cfd = new FormData;
     new_cfd.append('title', new_cname);
@@ -157,10 +174,17 @@ export class CategoriesComponent implements OnInit {
 
     this._catSer.addNewCategory(new_cfd).subscribe(res => {
       console.log(res);
+
+      for (let key in res) {
+        if (key === 'photo_url') {
+          res['photo_url'] = 'http://127.0.0.1:8000' + res['photo_url'];
+        }
+      }
+      console.log(res);
+
       if (new_ctype === 'project') {
         this.pCategories.push(res);
-      }
-      else if (new_ctype === 'service') {
+      } else if (new_ctype === 'service') {
         this.sCategories.push(res);
       }
     }
@@ -209,32 +233,54 @@ export class CatEditDialog {
 
   editCat = new FormGroup({
     title: new FormControl(''),
-    description: new FormControl('')
-    // catImg: new FormControl('', Validators.required)
+    description: new FormControl(''),
+    photo_url: new FormControl(''),
 
   });
 
 
+  newImgLabel = 'Upload an image ...';
+
+  imgFile = null;
+  readFile(file) {
+    this.imgFile = file[0];
+    if (this.imgFile) {
+      this.newImgLabel = this.imgFile.name;
+    } else {
+      this.newImgLabel = "Upload an image ...";
+    }
+    console.log(this.imgFile);
+
+  }
+
+
   editCatSubmit(f) {
-    let catID = this.data.sCats[this.data.editIndex]['id'];
-    let catType = this.data.sCats[this.data.editIndex]['category'];
+    let catID = this.data.sCategories[this.data.editIndex]['id'];
+    let catType = this.data.sCategories[this.data.editIndex]['category'];
     let edit_cf = new FormData();
 
     for (let key in f) {
-      if (f[key]) {
+      if (f[key] && key !== 'photo_url') {
         edit_cf.append(`${key}`, f[key]);
+        console.log(key, f[key]);
+      } else if (f[key] && key === 'photo_url') {
+        edit_cf.append('photo', this.imgFile);
         console.log(key, f[key]);
       }
     }
-    console.log(this.data.sCats[this.data.editIndex], catID);
+    console.log(this.data.sCategories[this.data.editIndex], catID);
 
     edit_cf.append('_method', 'put');
     edit_cf.append('category', catType);
     this._catServ.editCategory(catID, edit_cf).subscribe(res => {
       console.log(res);
+      this.data.sCategories[this.data.editIndex] = res;
+      if (res['photo_url']) {
+        this.data.sCategories[this.data.editIndex]['photo_url'] = 'http://127.0.0.1:8000' + res['photo_url'];
+      }
 
     });
-    this.dialogRef.close({ event: 'close', receivedData: f });
+    // this.dialogRef.close({ event: 'close', receivedData: f });
     this.editCat.reset();
   }
 
@@ -258,23 +304,40 @@ export class CatPEditDialog {
 
   editPCat = new FormGroup({
     title: new FormControl(''),
-    description: new FormControl('')
-    // catImg: new FormControl('', Validators.required)
+    description: new FormControl(''),
+    photo_url: new FormControl(''),
 
   });
 
 
+  newImgLabel = 'Upload an image ...';
+
+  imgFile = null;
+  readFile(file) {
+    this.imgFile = file[0];
+    if (this.imgFile) {
+      this.newImgLabel = this.imgFile.name;
+    } else {
+      this.newImgLabel = "Upload an image ...";
+    }
+    console.log(this.imgFile);
+
+  }
+
 
   editCatPSubmit(f) {
-    let catID = this.data.pCats[this.data.editIndex]['id'];
-    let catType = this.data.pCats[this.data.editIndex]['category'];
-    console.log(this.data.pCats[this.data.editIndex], catID);
+    let catID = this.data.pCategories[this.data.editIndex]['id'];
+    let catType = this.data.pCategories[this.data.editIndex]['category'];
+    console.log(this.data.pCategories[this.data.editIndex], catID);
 
     let edit_p_cf = new FormData();
 
     for (let key in f) {
-      if (f[key]) {
+      if (f[key] && key !== 'photo_url') {
         edit_p_cf.append(`${key}`, f[key]);
+        console.log(key, f[key]);
+      } else if (f[key] && key === 'photo_url') {
+        edit_p_cf.append('photo', this.imgFile);
         console.log(key, f[key]);
       }
     }
@@ -286,12 +349,54 @@ export class CatPEditDialog {
 
     this._catServ.editCategory(catID, edit_p_cf).subscribe(res => {
       console.log(res);
-
+      this.data.pCategories[this.data.editIndex] = res;
+      if (res['photo_url']) {
+        this.data.pCategories[this.data.editIndex]['photo_url'] = 'http://127.0.0.1:8000' + res['photo_url'];
+      }
     });
-    this.dialogRef.close({ event: 'close', receivedData: f });
     this.editPCat.reset();
   }
 
+
+
+
+}
+
+
+
+
+@Component({
+  selector: 'cat-display-dialog',
+  templateUrl: 'cat-display-dialog.html',
+  styleUrls: ['./categories.component.css']
+
+})
+export class CatDisplayDialog {
+
+
+  constructor(public dialogRef: MatDialogRef<CatDisplayDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private _catServ: CategoriesService) { }
+
+
+
+}
+
+
+
+
+@Component({
+  selector: 'cat-p-display-dialog',
+  templateUrl: 'cat-p-display-dialog.html',
+  styleUrls: ['./categories.component.css']
+
+})
+export class CatPDisplayDialog {
+
+
+  constructor(public dialogRef: MatDialogRef<CatPDisplayDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private _catServ: CategoriesService) { }
 
 
 

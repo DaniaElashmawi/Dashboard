@@ -4,20 +4,6 @@
 }
 
 
-.show {
-  height: 100px;
-  overflow-y: scroll;
-  transition: height .4s ease-out;
-
-}
-
-.hide {
-  height: 0;
-  overflow: hidden;
-  transition: height .4s ease-out;
-
-}
-
 .cat-btn {
   right: 50px;
   position: absolute;
@@ -58,7 +44,34 @@
 
 #categories .s-list {}
 
-#categories .s-list-item-top {
+#categories .s-list-item-content-box {
+  height: 150px;
+  position: relative;
+  border-radius: 8px;
+  background-color: #d9d9d9;
+}
+
+#categories .s-list-item-content-options {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  display: flex;
+
+  flex-direction: column;
+}
+
+#categories .s-list-item-content {
+  height: 100%;
+  font-weight: 900;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+
+
+/* #categories .s-list-item-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -66,14 +79,14 @@
   margin-bottom: 10px;
   background-color: #d9d9d9;
 
-}
+} */
 
 #categories .s-list-item-top span {
   font-size: 16px;
   font-weight: 700;
 }
 
-#categories .s-list-item-top mat-icon {
+#categories .s-list-item-content-options mat-icon {
   cursor: pointer;
 }
 
@@ -127,13 +140,32 @@ input {
 
 #categories .p-list {}
 
-#categories .p-list-item-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6px 20px;
-  margin-bottom: 10px;
+#categories .p-list-item-content-box {
+  height: 150px;
+  position: relative;
+  border-radius: 8px;
   background-color: #d9d9d9;
+
+}
+
+
+#categories .p-list-item-content-options {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  display: flex;
+
+  flex-direction: column;
+}
+
+
+#categories .p-list-item-content {
+  height: 100%;
+  font-weight: 900;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 
 }
 
@@ -142,7 +174,7 @@ input {
   font-weight: 700;
 }
 
-#categories .p-list-item-top mat-icon {
+#categories .p-list-item-content-options mat-icon {
   cursor: pointer;
 }
 
@@ -154,7 +186,6 @@ input {
 #categories .p-list-item {
   padding: 10px 50px;
 }
-
 
 #newCategory .newCat-title {
   background-color: #F60000;
@@ -182,7 +213,7 @@ input {
   max-height: 2em
 }
 
-#newCategory label {
+label {
   font-weight: 700;
 }
 
@@ -225,6 +256,65 @@ input {
 }
 
 #newCategory .cat-img {
+  font-size: 14px;
+  background-color: #646464;
+  border-radius: 4px;
+  padding: 5px 0;
+  padding-left: 6px;
+  color: #fff;
+  cursor: pointer;
+}
+
+#serv-cat-display-dialog .img-box {
+  height: 350px;
+}
+
+#serv-cat-display-dialog .img-box img {
+  height: 100%;
+}
+
+#serv-cat-display-dialog .close-btn button {
+  border-radius: 6px;
+  background-color: #F60000;
+  color: #fff;
+}
+
+#serv-cat-display-dialog .close-btn {
+  bottom: 0;
+  right: 0;
+}
+
+#proj-cat-display-dialog .img-box {
+  height: 350px;
+}
+
+#proj-cat-display-dialog .img-box img {
+  height: 100%;
+}
+
+#proj-cat-display-dialog .close-btn button {
+  border-radius: 6px;
+  background-color: #F60000;
+  color: #fff;
+}
+
+#proj-cat-display-dialog .close-btn {
+  bottom: 0;
+  right: 0;
+}
+
+#editPCat input[type=file],
+#editCat input[type=file] {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+#editPCat .cat-img,
+#editCat .cat-img {
   font-size: 14px;
   background-color: #646464;
   border-radius: 4px;

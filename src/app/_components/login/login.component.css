@@ -13,7 +13,7 @@ input[type="email"]:focus,
 input[type="password"]:focus {
   padding: 6px;
   border-radius: 11px;
-  margin: 10px;
+  margin: 10px 0;
   outline: none;
   border: 1px solid white;
   background-color: white !important;
@@ -48,4 +48,65 @@ button {
 
 .error {
   color: red;
+}
+
+.remember-user {
+  margin: 10px 20px;
+}
+
+.remember-user .container {
+  display: block;
+  position: relative;
+  padding-left: 26px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+}
+
+.remember-user .container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.remember-user .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #d9d9d9;
+}
+
+
+
+.remember-user .container input:checked~.checkmark {
+  background-color: #F60000;
+}
+
+.remember-user .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked~.checkmark:after {
+  display: block;
+}
+
+.remember-user .container .checkmark:after {
+  left: 7px;
+  top: 0px;
+  width: 7px;
+  height: 15px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
 }

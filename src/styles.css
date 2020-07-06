@@ -34,3 +34,7 @@ body {
 .pull-left {
   float: left;
 }
+
+.mat-dialog-content {
+  max-height: 50vh !important;
+}

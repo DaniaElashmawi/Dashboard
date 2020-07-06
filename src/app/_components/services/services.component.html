@@ -48,12 +48,14 @@
             <img src={{serv.photo_url}} class="w-100">
           </div>
           <div class="single-service-layer position-absolute ">
-            <h5><span>{{i + 1}}. </span>{{serv.title}}</h5>
+            <h5 class="prim-color">
+              <!-- <span>{{i + 1}}. </span> -->
+              {{serv.title}}</h5>
 
 
             <div class="service-setting">
 
-              <mat-icon (click)="openDialog(i)">visibility</mat-icon>
+              <mat-icon (click)="openDialog(i)" class="prim-color">visibility</mat-icon>
               <mat-icon (click)="openEditDialog(i)" class="edit-color">edit</mat-icon>
               <mat-icon (click)="deleteSingleService(i)" class="secondary-color">clear</mat-icon>
             </div>

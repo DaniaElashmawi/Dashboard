@@ -40,7 +40,7 @@ export class ServicesComponent implements OnInit {
   editindex: number;
   currentService;
 
-  newImgLabel = "Upload an image ...";
+  newImgLabel = 'Upload an image ...';
   nonewService: boolean = true;
   nonewCategory: boolean = true;
   mainCategories = [];
@@ -53,7 +53,7 @@ export class ServicesComponent implements OnInit {
     this.index = i;
     this.currentService = this.servicesDetails[i];
     const dialogRef = this.dialog.open(servicedisplayDialog, {
-      width: '850px',
+      width: '880px',
       data: {
         index: this.index, currentService: this.currentService
       }
@@ -80,21 +80,28 @@ export class ServicesComponent implements OnInit {
 
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The edit dialog was closed', result);
-      if (result !== undefined) {
-        console.log('The edit dialog was closed', result);
-        this.dialogValue = result.receivedData;
-        for (let key in this.dialogValue) {
-          if (this.dialogValue[key]) {
-            this.servicesDetails[i][key] = this.dialogValue[key];
-          }
+      console.log('The edit dialog was closed');
+      // if (result !== undefined) {
+      //   // console.log('The edit dialog was closed', result);
+      //   // this.dialogValue = result.receivedData;
+      //   console.log(result.receivedData['photo_url']);
 
-        }
+      //   for (let key in result.receivedData) {
+      //     if (result.receivedData[key] && key !== 'photo_url') {
+      //       this.servicesDetails[i][key] = result.receivedData[key];
+      //     }
 
-      }
-      else {
-        console.log("no result from edit dialog");
-      }
+      //     if (result.receivedData[key] && key === 'photo_url') {
+      //       this.servicesDetails[i][key] = 'http://127.0.0.1:8000' + result.receivedData[key];
+      //       console.log(this.servicesDetails[i][key])
+      //     }
+
+      //   }
+
+      // } else {
+      //   console.log('no result from edit dialog');
+      // }
+
     });
 
   }
@@ -165,7 +172,7 @@ export class ServicesComponent implements OnInit {
       this.newImgLabel = this.imgFile.name;
     }
     else {
-      this.newImgLabel = "Upload an image ...";
+      this.newImgLabel = 'Upload an image ...';
     }
     console.log(this.imgFile);
   }
@@ -180,7 +187,7 @@ export class ServicesComponent implements OnInit {
 
     for (let x of this.services) {
       if (x['title'] == new_scat) {
-        cat_id = x['id']
+        cat_id = x['id'];
       }
     }
 
@@ -200,7 +207,7 @@ export class ServicesComponent implements OnInit {
       err => {
         console.log(err);
       });
-    this.newImgLabel = "Upload an image ...";
+    this.newImgLabel = 'Upload an image ...';
     this.newService.reset();
     this.nonewService = !this.nonewService;
 
@@ -209,7 +216,7 @@ export class ServicesComponent implements OnInit {
   reset() {
     this.newService.reset();
     this.newCat.reset();
-    this.newImgLabel = "Upload an image ...";
+    this.newImgLabel = 'Upload an image ...';
 
   }
 
@@ -236,7 +243,7 @@ export class ServicesComponent implements OnInit {
       ,
       err => console.log(err)
     );
-    this.newImgLabel = "Upload an image ...";
+    this.newImgLabel = 'Upload an image ...';
     this.newCat.reset();
     this.nonewCategory = !this.nonewCategory;
 
@@ -289,12 +296,13 @@ export class serviceeditDialog {
   });
 
   constructor(
-    public dialogRef: MatDialogRef<serviceeditDialog>, @Optional()
+    public dialogRef: MatDialogRef<serviceeditDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _SerService: ServicesService) { }
 
-  imgLabel = "Upload an image ...";
+  imgLabel = 'Upload an image ...';
   // url;
+  imgURL = '';
   imgFile = null;
 
   readFile(file) {
@@ -303,19 +311,19 @@ export class serviceeditDialog {
       this.imgLabel = this.imgFile.name;
     }
     else {
-      this.imgLabel = "Upload an image ...";
+      this.imgLabel = 'Upload an image ...';
     }
     console.log(this.imgFile);
   }
 
 
-  // readUrl(event: any) {
+  // readFile(event: any) {
   //   if (event.target.files && event.target.files[0]) {
   //     var reader = new FileReader();
   //     reader.readAsDataURL(event.target.files[0]);
 
   //     reader.onload = (e: any) => {
-  //       this.url = (<FileReader>e.target).result;
+  //       this.url = e.target.result;
   //       console.log(this.url, reader);
 
   //     }
@@ -328,17 +336,16 @@ export class serviceeditDialog {
     const s_fd = new FormData();
 
     for (const key in f) {
-      if (f[key]) {
+      if (f[key] && key !== 'photo_url') {
         s_fd.append(`${key}`, f[key]);
         console.log(key, f[key]);
-      }
-      if (key === 'photo_url' && f[key]) {
-        s_fd.append(`${key}`, this.imgFile);
+      } else if (key === 'photo_url' && f[key]) {
+        console.log('this is the imgfile', this.imgFile);
+        s_fd.append(`photo`, this.imgFile);
         // console.log(key, this.url);
 
       }
     }
-    s_fd.append("photo_url", this.imgFile);
     s_fd.append('_method', 'put');
 
     let id = this.data.servicesDetails[this.data.editindex]['id'];
@@ -346,15 +353,26 @@ export class serviceeditDialog {
 
     this._SerService.editService(id, s_fd).subscribe(res => {
       console.log(res);
+      this.data.servicesDetails[this.data.editindex] = res;
+      if (res['photo_url']) {
+        this.data.servicesDetails[this.data.editindex]['photo_url'] = 'http://127.0.0.1:8000' + res['photo_url']
+      }
+      // console.log(this.data.servicesDetails[this.data.editindex]);
 
+      // f['photo_url'] = res['photo_url'];
+      // console.log(this.imgURL);
+      // console.log(res['photo_url'])
     },
       err => {
         console.log(err);
       }
     );
-    this.dialogRef.close({ event: 'close', receivedData: f });
 
+    // this.dialogRef.close({ event: 'close', receivedData: f });
+    // console.log(f);
   }
 
-
 }
+
+
+
